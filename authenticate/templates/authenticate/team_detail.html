@@ -1,0 +1,30 @@
+{% extends 'authenticate/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+<div class="float-center">
+	<div class="card" style="width: 18rem;">
+	  <div class="card-header">
+	    {{ teambox.username }}
+	  </div>
+	  <ul class="list-group list-group-flush">
+	    <li class="list-group-item"><strong>Men's Singles 1:</strong> {{ teambox.MS1 }}</li>
+	    <li class="list-group-item"><strong>Men's Singles 2:</strong> {{ teambox.MS2 }}</li>
+	    <li class="list-group-item"><strong>Women's Singles 1:</strong> {{ teambox.WS1 }}</li>
+	    <li class="list-group-item"><strong>Women's Singles 2:</strong> {{ teambox.WS2 }}</li>
+	    <li class="list-group-item"><strong>Men's Doubles 1:</strong> {{ teambox.MD1 }}</li>
+	    <li class="list-group-item"><strong>Men's Doubles 2:</strong> {{ teambox.MD2 }}</li>
+	    <li class="list-group-item"><strong>Women's Doubles 1:</strong> {{ teambox.WD1 }}</li>
+	    <li class="list-group-item"><strong>Women's Doubles 2:</strong> {{ teambox.WD2 }}</li>
+	    <li class="list-group-item"><strong>Mixed Doubles 1:</strong> {{ teambox.XD2 }}</li>
+	    <li class="list-group-item"><strong>Mixed Doubles 2:</strong> {{ teambox.XD2 }}</li>
+	    <li class="list-group-item"><strong>TOTAL POINTS: {{ teambox.points }}</strong></li>
+	  </ul>
+	</div>
+</div>
+
+
+{% endblock %}

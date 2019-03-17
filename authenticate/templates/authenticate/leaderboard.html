@@ -1,0 +1,35 @@
+{% extends 'authenticate/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<h1>Leaderboard</h1>
+
+<br/>
+
+{% if all_teams %}
+	<table id=teams_table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Team</th>	
+				<th scope="col">Total Points</th>
+			</tr>
+		</thead>
+	{% for things in all_teams %}
+		<tbody>
+			<tr>
+			    <td><a href="{% url 'team_detail' team=things.team %}}">{{ things.username }}</a></td>
+			    <td>{{ things.points }}</td>
+			</tr>
+		</tbody>
+	{% endfor %}
+	</table>
+
+{% endif %}
+
+{% endif %}
+
+{% endblock %}
+

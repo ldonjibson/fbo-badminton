@@ -1,0 +1,274 @@
+{% extends 'authenticate/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Teams</h1>
+
+<div class="card-deck">
+  <div class="card border-danger mb-3">
+    <div class="card-body">
+      <h5>Next tournament: ALL ENGLAND OPEN (06/03/2019-10/03/2019)</h5>
+      <p>Team submission deadline: 05/03/2019 11.59pm UK time :)</p>
+    </div>
+  </div>
+</div>
+
+{% if user.is_authenticated %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Event</th>
+            <th scope="col">Player</th>
+            <th scope="col">Country</th>
+            <th scope="col">Price(£)</th>
+            <th scope="col">Last Tournament</th>
+            <th scope="col">Current Tournament</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">MS1</th>
+          <td><a href="#">Lin Dan</a></td>
+          <td>China</td>
+          <td>82</td>
+          <td>88</td>
+          <td>21</td>
+          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+        </tr>
+        <tr>
+          <th scope="row">MS2</th>
+          <td><a href="#">Lee Hyun Il</a></td>
+          <td>South Korea</td>
+          <td>60</td>
+          <td>88</td>
+          <td>21</td>
+          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+        </tr>
+        <tr>
+          <th scope="row">WS1</th>
+          <td><a href="#">Tai Tzu Ying</a></td>
+          <td>Taiwan</td>
+          <td>105</td>
+          <td>88</td>
+          <td>21</td>
+          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+        </tr>
+        <tr>
+          <th scope="row">MD1</th>
+          <td><a href="#">Liu Yuchen</a></td>
+          <td>China</td>
+          <td>98</td>
+          <td>88</td>
+          <td>21</td>
+          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+        </tr>
+        <tr>
+          <th scope="row">MD2</th>
+          <td><a href="#">Lee Yong Dae</a></td>
+          <td>South Korea</td>
+          <td>55</td>
+          <td>88</td>
+          <td>21</td>
+          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+        </tr>
+        <tr>
+          <th scope="row">WD1</th>
+          <td><a href="#">Yuki Fukushima</a></td>
+          <td>Japan</td>
+          <td>101.1</td>
+          <td>88</td>
+          <td>21</td>
+          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+        </tr>
+        <tr>
+          <th scope="row">WD2</th>
+          <td><a href="#">Naoko Fukuman</a></td>
+          <td>Japan</td>
+          <td>52.8</td>
+          <td>88</td>
+          <td>21</td>
+          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+        </tr>
+        <tr>
+          <th scope="row">XD1</th>
+          <td><a href="#">Zheng Siwei</a></td>
+          <td>China</td>
+          <td>115</td>
+          <td>88</td>
+          <td>21</td>
+          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+        </tr>
+        <tr>
+          <th scope="row">XD2</th>
+          <td><a href="#">Huang Dongping</a></td>
+          <td>China</td>
+          <td>95.5</td>
+          <td>88</td>
+          <td>21</td>
+          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+        </tr>
+      </tbody>
+    </table>
+    </div> 
+
+    <div class="col-sm..offset-md-4">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+        <div class="card-header">
+        TEAM NAME
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Overall points:</strong> 1,234</br><strong>Global rank:</strong> 101</br><strong>Total players:</strong> 100,500</li>
+          <li class="list-group-item"><strong>Current tournament points:</strong> 69</li>
+          <li class="list-group-item"><a href="#"><strong>Your leagues</strong></a></li>
+        </ul>
+      </div>
+      <div class="container border-danger">
+        <div class="row">
+          <div class="col-sm.offset-md-4">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th scope="row">BUDGET (£)</th>
+                <td>0.5</td>
+              </tr>
+              <tr>
+                <th scope="row">TEAM VALUE (£)</th>
+                <td>128.8</td>
+              </tr> 
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+            
+</br>
+
+
+{% endif %}
+
+</br>
+
+<div class="col-sm">
+      <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Tournament</th>
+            <th scope="col">Month</th>
+            <th scope="col">Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Location</th>
+        </tr>
+    </thead>
+      <tbody>
+        <tr>
+          <td>ALL ENGLAND OPEN</td>
+          <td>March</td>
+          <td>06-10</td>
+          <td>BWF Tour 1000</td>
+          <td>Birmingham, UK</td>
+        </tr>
+        <tr>
+          <td>INDIA OPEN</td>
+          <td>March</td>
+          <td>26-31</td>
+          <td>BWF Tour 500</td>
+          <td>New Delhi, India</td>
+        </tr>
+        <tr>
+          <td>MALAYSIA OPEN</td>
+          <td>April</td>
+          <td>02-07</td>
+          <td>BWF Tour 750</td>
+          <td>Kuala Lumpur</td>
+        </tr>
+        <tr>
+          <td>SINGAPORE OPEN</td>
+          <td>April</td>
+          <td>09-14</td>
+          <td>BWF Tour 500</td>
+          <td>Singapore</td>
+        </tr>
+        <tr>
+          <td>INDONESIA OPEN</td>
+          <td>July</td>
+          <td>16-21</td>
+          <td>BWF Tour 1000</td>
+          <td>Jakarta, Indonesia</td>
+        </tr>
+       <tr>
+          <td>JAPAN OPEN</td>
+          <td>July</td>
+          <td>23-28</td>
+          <td>BWF Tour 750</td>
+          <td>Tokyo, Japan</td>
+        </tr>
+        <tr>
+          <td>THAILAND OPEN</td>
+          <td>July/August</td>
+          <td>06-10</td>
+          <td>BWF Tour 500</td>
+          <td>Bangkok, Thailand</td>
+        </tr>
+        <tr>
+          <td>WORLD CHAMPIONSHIPS</td>
+          <td>August</td>
+          <td>19-25</td>
+          <td>***</td>
+          <td>Basel, Switzerland</td>
+        </tr>
+        <tr>
+          <td>CHINA OPEN</td>
+          <td>September</td>
+          <td>17-22</td>
+          <td>BWF Tour 1000</td>
+          <td>Changzhou, China</td>
+        </tr>
+        <tr>
+          <td>KOREA OPEN</td>
+          <td>September</td>
+          <td>24-29</td>
+          <td>BWF Tour 500</td>
+          <td>Seoul, South Korea</td>
+        </tr>
+        <tr>
+          <td>DENMARK OPEN</td>
+          <td>October</td>
+          <td>15-20</td>
+          <td>BWF Tour 750</td>
+          <td>Odense, Denmark</td>
+        </tr>
+        <tr>
+          <td>FRENCH OPEN</td>
+          <td>October</td>
+          <td>22-27</td>
+          <td>BWF Tour 750</td>
+          <td>Paris, France</td>
+        </tr>
+        <tr>
+          <td>FUZHOU CHINA OPEN</td>
+          <td>November</td>
+          <td>05-10</td>
+          <td>BWF Tour 750</td>
+          <td>Fuzhou, China</td>
+        </tr>
+        <tr>
+          <td>HONG KONG OPEN</td>
+          <td>November</td>
+          <td>12-17</td>
+          <td>BWF Tour 500</td>
+          <td>Hong Kong</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</br>
+
+{% endblock %}

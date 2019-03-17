@@ -1,0 +1,42 @@
+{% extends 'authenticate/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      left column
+    </div>
+    <div class="col-sm">
+      	<div class="card" style="width: 18rem;">
+  			<img src="{{ profile.picture.url }}" class="card-img-top" alt="...">
+  			<div class="card-body">
+    			<h5 class="card-title">{{ profile.name }}</h2><h5>(£{{ profile.price }} million)</h5>
+    			<p class="card-text text-danger">{{ profile.status }}</p>
+		</div>
+  		<ul class="list-group list-group-flush">
+		    <li class="list-group-item"><Strong>Country:</Strong> {{ profile.country }}</li>
+		    <li class="list-group-item"><Strong>World rank:</Strong> {{ profile.rank }}</li>
+		    <li class="list-group-item"><Strong>Season points:</Strong> {{ profile.score }}</li>
+		    <li class="list-group-item"><Strong>Last tournament points:</Strong> {{ profile.last }}</li>
+		    <li class="list-group-item"><Strong>Latest results:</Strong> {{ profile.results }}</li>
+		    <li class="list-group-item"><Strong>Form:</Strong> {{ profile.form }}</li>
+		    <li class="list-group-item"><Strong>Games won vs top 8:</Strong> {{ profile.game8 }}</li>
+		    <li class="list-group-item"><Strong>Matches won vs top 8:</Strong> {{ profile.match8 }}</li>
+  		</ul>
+  		<div class="card-body">
+    		<a href="#" class="card-link">Add to watchlist</a>
+    		<a href="#" class="card-link">Another link</a>
+  		</div>
+</div>
+    </div>
+    	<div class="col-sm">
+    		right column
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
