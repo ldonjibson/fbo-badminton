@@ -103,8 +103,8 @@ def article_detail(request, slug):
 	return render(request, 'authenticate/article_detail.html', {'article': article})
 
 def team_detail(request, team):
-	#return HttpResponse(team)
-	teambox = Teams.objects.get(team=team)
+	return HttpResponse(team)
+	#teambox = Teams.objects.get(team=team)
 	return render(request, 'authenticate/team_detail.html', {'teambox': teambox})
 
 def transfers(request):
@@ -125,4 +125,3 @@ def my_team(request):
 	#api_request = requests.get("https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=99509d87cbcb4b81ababc39ca20d8175")
 	#api = json.loads(api_request.content)
 	#return render(request, 'authenticate/news.html', {'api' : api })
-
