@@ -8,7 +8,7 @@
 
 
 
-# FRONT-END AMEDMENTS NEEDED AT END OF PROJECT
+# FRONT-END AMENDMENTS NEEDED AT END OF PROJECT
 # news.html and article_detail.html layout. Central and neater look. Accomodate for ad web banners
 # rules.html amendments of content and addition of images. Maybe even embedding a video
 # Add prizes page with images and link to previous winners (carousel)
