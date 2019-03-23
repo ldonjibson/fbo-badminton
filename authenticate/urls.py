@@ -16,9 +16,9 @@ urlpatterns = [
 	path('rules/', views.rules_page, name='rules'),
 	path('fantasy_player_ranking/', views.fantasy_player_ranking, name='fantasy_player_ranking'),
 	path('news/', views.news, name='news'),
+	path('<slug>/', views.article_detail, name='article_detail'),
 	path('transfers/', views.transfers, name='transfers'),
 	path('<player>/', views.player_profile, name='player_profile'),
-	path('<slug>/', views.article_detail, name='article_detail'),
 	path('<team>/', views.team_detail, name='team_detail'),
 
 
