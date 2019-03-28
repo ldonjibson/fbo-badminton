@@ -35,7 +35,7 @@ class Teams(models.Model): # team model, players(Rankings model) have foreign ke
 	
 
 	def __str__(self):
-		return self.username
+		return self.owner.username
 
 
 class Ranking(models.Model):
