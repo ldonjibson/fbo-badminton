@@ -20,16 +20,6 @@ class Teams(models.Model): # team model, players(Rankings model) have foreign ke
 	budget = models.IntegerField(default=120)
 	owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE) # relation to a user
 	team = models.SlugField()
-	MS1 = models.CharField(max_length=50)
-	MS2 = models.CharField(max_length=50)
-	WS1 = models.CharField(max_length=50)
-	WS2 = models.CharField(max_length=50)
-	MD1 = models.CharField(max_length=50)
-	MD2 = models.CharField(max_length=50)
-	WD1 = models.CharField(max_length=50)
-	WD2 = models.CharField(max_length=50)
-	XD1 = models.CharField(max_length=50)
-	XD2 = models.CharField(max_length=50)
 	date = models.DateTimeField(auto_now_add=True)
 	points = models.CharField(max_length=50)
 	
@@ -54,11 +44,31 @@ class Ranking(models.Model):
 	player = models.SlugField()
 	picture = models.ImageField(default='default.png', blank=True)
 	playing = models.BooleanField(default=True)
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE) # connection to a team
 
 
 	def __str__(self):
 		return self.rank + ' ' + self.name + ' ' + str(self.playing)
+
+#small subclasses for each type of player, they have all the methods from Ranking model, but also related to a team)
+
+class MSPlayer(Ranking):
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MSplayers')  # connection to a team
+
+
+class WSPlayer(Ranking):
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WSplayers')  # connection to a team
+
+
+class MDPlayer(Ranking):
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MDplayers')  # connection to a team
+
+
+class WDPlayer(Ranking):
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WDplayers')  # connection to a team
+
+
+class XDPlayer(Ranking):
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='XDplayers')  # connection to a team
 
 
 class ArchiveRecord(models.Model): # an archive record
