@@ -3,12 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib import messages
 from .forms import SignUpForm, EditProfileForm
-from .models import Ranking
+from .models import *
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from .models import Article
 from django.contrib.auth.models import User
-from .models import Teams
+
 
 def home(request):
 	articles = Article.objects.all().order_by('date')
@@ -99,7 +98,7 @@ def news(request):
 
 def article_detail(request, slug):
 	#return HttpResponse(slug)
-	article = Article.objects.get(slug=slug)
+	article = Article.objects.all()[0]
 	return render(request, 'authenticate/article_detail.html', {'article': article})
 
 def team_detail(request, team):
@@ -112,11 +111,68 @@ def transfers(request):
 	return render(request, 'authenticate/transfers.html', {'all_ranking': all_ranking })
 
 def my_team(request):
-	return render(request, 'authenticate/my_team.html', {})
+	user = request.user
+	context = {}
+	user_team = Teams.objects.filter(owner=user).first()
+	context['MSplayers'] = MSPlayer.objects.filter(team=user_team)
+	context['WSplayers'] = WSPlayer.objects.filter(team=user_team)
+	context['WDplayers'] = WDPlayer.objects.filter(team=user_team)
+	context['MDplayers'] = MDPlayer.objects.filter(team=user_team)
+	context['XDplayers'] = XDPlayer.objects.filter(team=user_team)
+	context['team'] = user_team
+	return render(request, 'authenticate/my_team.html', context)
 
 
+def sell_player(request, player_pk, player_type):
+	user = request.user
+	user_team = Teams.objects.filter(owner=user).first()
+	if player_type == 'MS':
+		player = MSPlayer.objects.get(pk=player_pk)
+	elif player_type == 'WS':
+		player = WSPlayer.objects.get(pk=player_pk)
+	elif player_type == 'MD':
+		player = MDPlayer.objects.get(pk=player_pk)
+	elif player_type == 'WD':
+		player = WDPlayer.objects.get(pk=player_pk)
+	else:
+		player = XDPlayer.objects.get(pk=player_pk)
+	user_team.budget += player.cost
+	user_team.save()
+	player.team = None
+	player.save()
+	return redirect('my_team')
 
 
+def buy_players_index(request):
+	user_team = Teams.objects.filter(owner=request.user).first()
+	context = {}
+	context['players'] = list(MSPlayer.objects.filter(team=None))
+	context['players'] += list(WSPlayer.objects.filter(team=None))
+	context['players'] += list(WDPlayer.objects.filter(team=None))
+	context['players'] += list(MDPlayer.objects.filter(team=None))
+	context['players'] += list(XDPlayer.objects.filter(team=None))
+	context['team'] = user_team
+	return render(request, 'authenticate/vacant_players.html', context)
+
+
+def buy_player(request, player_type, player_pk):
+	user = request.user
+	user_team = Teams.objects.filter(owner=user).first()
+	if player_type == 'MS':
+		player = MSPlayer.objects.get(pk=player_pk)
+	elif player_type == 'WS':
+		player = WSPlayer.objects.get(pk=player_pk)
+	elif player_type == 'MD':
+		player = MDPlayer.objects.get(pk=player_pk)
+	elif player_type == 'WD':
+		player = WDPlayer.objects.get(pk=player_pk)
+	else:
+		player = XDPlayer.objects.get(pk=player_pk)
+	user_team.budget -= player.cost
+	user_team.save()
+	player.team = user_team
+	player.save()
+	return redirect('buy_players')
 
 
 #attempt at api content for news page
