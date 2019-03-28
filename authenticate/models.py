@@ -40,6 +40,17 @@ class Teams(models.Model): # team model, players(Rankings model) have foreign ke
 		return sum(total)
 
 
+	def get_team_total_points(self):
+		total = []
+		total.append(self.MSplayers.all().aggregate(Sum('score'))['score__sum'])
+		total.append(self.WSplayers.all().aggregate(Sum('score'))['score__sum'])
+		total.append(self.MDplayers.all().aggregate(Sum('score'))['score__sum'])
+		total.append(self.WDplayers.all().aggregate(Sum('score'))['score__sum'])
+		total.append(self.XDplayers.all().aggregate(Sum('score'))['score__sum'])
+		total = [x for x in total if x is not None]
+		return sum(total)
+
+
 
 class ArchiveRecord(models.Model): # an archive record
 	team = models.ForeignKey(Teams, on_delete=models.CASCADE) # relation to a team
@@ -52,7 +63,7 @@ class Ranking(models.Model):
 	country = models.CharField(max_length=50)
 	cost = models.FloatField(default=10) # price is a number, defaults to 10. You can set it up in the admin panel
 	event = models.CharField(max_length=50)
-	score = models.CharField(max_length=50)
+	score = models.IntegerField(default=0)
 	last = models.CharField(max_length=50)
 	form = models.CharField(max_length=50)
 	results = models.CharField(max_length=50)
@@ -66,7 +77,7 @@ class Ranking(models.Model):
 	last_tournament_score = models.IntegerField(default=10)
 
 	def __str__(self):
-		return str(self.rank) + ' ' + self.name + ' ' + str(self.playing)
+		return str(self.rank) + ' ' + self.name
 
 	def get_type(self): # MS, WS, etc
 		return self.__class__.__name__[:2]
