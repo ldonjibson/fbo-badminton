@@ -146,11 +146,11 @@ def sell_player(request, player_pk, player_type):
 def buy_players_index(request):
 	user_team = Teams.objects.filter(owner=request.user).first()
 	context = {}
-	context['players'] = list(MSPlayer.objects.filter(team=None))
-	context['players'] += list(WSPlayer.objects.filter(team=None))
-	context['players'] += list(WDPlayer.objects.filter(team=None))
-	context['players'] += list(MDPlayer.objects.filter(team=None))
-	context['players'] += list(XDPlayer.objects.filter(team=None))
+	context['MSplayers'] = list(MSPlayer.objects.filter(team=None))
+	context['WSplayers'] = list(WSPlayer.objects.filter(team=None))
+	context['WDplayers'] = list(WDPlayer.objects.filter(team=None))
+	context['MDplayers'] = list(MDPlayer.objects.filter(team=None))
+	context['XDplayers'] = list(XDPlayer.objects.filter(team=None))
 	context['team'] = user_team
 	return render(request, 'authenticate/vacant_players.html', context)
 
@@ -168,6 +168,12 @@ def buy_player(request, player_type, player_pk):
 		player = WDPlayer.objects.get(pk=player_pk)
 	else:
 		player = XDPlayer.objects.get(pk=player_pk)
+	if user_team.budget < player.cost:
+		messages.success(request, ("You don't have enough funds"))
+		return redirect('buy_players')
+	if user_team.get_team_value() + player.cost > 120:
+		messages.success(request, ("Your team's cost can't exceed 120"))
+		return redirect('buy_players')
 	user_team.budget -= player.cost
 	user_team.save()
 	player.team = user_team

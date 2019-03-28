@@ -28,6 +28,7 @@ class Teams(models.Model): # team model, players(Rankings model) have foreign ke
 	def __str__(self):
 		return self.owner.username
 
+
 	def get_team_value(self):
 		total = []
 		total.append(self.MSplayers.all().aggregate(Sum('cost'))['cost__sum'])
@@ -73,22 +74,22 @@ class Ranking(models.Model):
 #small subclasses for each type of player, they have all the methods from Ranking model, but also related to a team)
 
 class MSPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MSplayers', null=True)  # connection to a team
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MSplayers', null=True, blank=True)  # connection to a team
 
 
 class WSPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WSplayers', null=True)  # connection to a team
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WSplayers', null=True, blank=True)  # connection to a team
 
 
 class MDPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MDplayers', null=True)  # connection to a team
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MDplayers', null=True, blank=True)  # connection to a team
 
 
 class WDPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WDplayers', null=True)  # connection to a team
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WDplayers', null=True, blank=True)  # connection to a team
 
 
 class XDPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='XDplayers', null=True)  # connection to a team
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='XDplayers', null=True, blank=True)  # connection to a team
 
 
