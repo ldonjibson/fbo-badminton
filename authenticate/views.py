@@ -46,6 +46,7 @@ def register_user(request):
 			username = form.cleaned_data['username']
 			password = form.cleaned_data['password1']
 			user = authenticate(username=username, password=password)
+			Teams.objects.create(owner=user)
 			login(request, user)
 			messages.success(request, ('Yay! You have registered'))
 			return redirect('home')
@@ -101,10 +102,16 @@ def article_detail(request, slug):
 	article = Article.objects.all()[0]
 	return render(request, 'authenticate/article_detail.html', {'article': article})
 
-def team_detail(request, team):
-	return HttpResponse(team)
-	#teambox = Teams.objects.get(team=team)
-	return render(request, 'authenticate/team_detail.html', {'teambox': teambox})
+def team_detail(request, team_pk):
+	context = {}
+	team = Teams.objects.get(pk=team_pk)
+	context['MSplayers'] = MSPlayer.objects.filter(team=team)
+	context['WSplayers'] = WSPlayer.objects.filter(team=team)
+	context['WDplayers'] = WDPlayer.objects.filter(team=team)
+	context['MDplayers'] = MDPlayer.objects.filter(team=team)
+	context['XDplayers'] = XDPlayer.objects.filter(team=team)
+	context['teampoints'] = team.get_team_total_points()
+	return render(request, 'authenticate/team_detail.html', context)
 
 def transfers(request):
 	all_ranking = Ranking.objects.filter().order_by('-last')

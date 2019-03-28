@@ -21,7 +21,7 @@ urlpatterns = [
 	path('players/buy_list', views.buy_players_index, name='buy_players'),
 	path('players/<player_type>/buy/<player_pk>', views.buy_player, name='buy_player'),
 	path('<player>/', views.player_profile, name='player_profile'),
-	path('<team>/', views.team_detail, name='team_detail'),
+	path('teams/<team_pk>', views.team_detail, name='team_detail'),
 	path('my_team/delete/<player_type>/<player_pk>', views.sell_player, name='sell_player'),
 
 
