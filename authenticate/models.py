@@ -62,5 +62,5 @@ class Ranking(models.Model):
 
 
 class ArchiveRecord(models.Model): # an archive record
-	team = models.ForeignKey(Teams) # relation to a team
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE) # relation to a team
 	score = models.IntegerField() # score
