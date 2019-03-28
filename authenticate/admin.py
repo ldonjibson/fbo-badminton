@@ -1,8 +1,10 @@
 from django.contrib import admin
-from .models import Ranking
-from .models import Article
-from .models import Teams
+from .models import *
 
-admin.site.register(Ranking)
+admin.site.register(MSPlayer)
+admin.site.register(WDPlayer)
+admin.site.register(MDPlayer)
+admin.site.register(WSPlayer)
+admin.site.register(XDPlayer)
 admin.site.register(Article)
 admin.site.register(Teams)
