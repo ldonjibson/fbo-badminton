@@ -31,87 +31,62 @@
           </tr>
       </thead>
       <tbody>
+      {% for player in MSplayers %}
         <tr>
-          <th scope="row">MS1</th>
-          <td><a href="#">Lin Dan</a></td>
-          <td>China</td>
-          <td>82</td>
-          <td>88</td>
-          <td>21</td>
-          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+          <th scope="row">MS{{ forloop.counter }}</th>
+          <td><a href="#">{{ player.name }}</a></td>
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
         </tr>
+      {% endfor %}
+      {% for player in WSplayers %}
         <tr>
-          <th scope="row">MS2</th>
-          <td><a href="#">Lee Hyun Il</a></td>
-          <td>South Korea</td>
-          <td>60</td>
-          <td>88</td>
-          <td>21</td>
-          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+          <th scope="row">WS{{ forloop.counter }}</th>
+          <td><a href="#">{{ player.name }}</a></td>
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
         </tr>
+      {% endfor %}
+      {% for player in MDplayers %}
         <tr>
-          <th scope="row">WS1</th>
-          <td><a href="#">Tai Tzu Ying</a></td>
-          <td>Taiwan</td>
-          <td>105</td>
-          <td>88</td>
-          <td>21</td>
-          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+          <th scope="row">MD{{ forloop.counter }}</th>
+          <td><a href="#">{{ player.name }}</a></td>
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+
+          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
         </tr>
+      {% endfor %}
+      {% for player in WDplayers %}
         <tr>
-          <th scope="row">MD1</th>
-          <td><a href="#">Liu Yuchen</a></td>
-          <td>China</td>
-          <td>98</td>
-          <td>88</td>
-          <td>21</td>
-          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+          <th scope="row">WD{{ forloop.counter }}</th>
+          <td><a href="#">{{ player.name }}</a></td>
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
         </tr>
+      {% endfor %}
+      {% for player in XDplayers %}
         <tr>
-          <th scope="row">MD2</th>
-          <td><a href="#">Lee Yong Dae</a></td>
-          <td>South Korea</td>
-          <td>55</td>
-          <td>88</td>
-          <td>21</td>
-          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
+          <th scope="row">XD{{ forloop.counter }}</th>
+          <td><a href="#">{{ player.name }}</a></td>
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
         </tr>
-        <tr>
-          <th scope="row">WD1</th>
-          <td><a href="#">Yuki Fukushima</a></td>
-          <td>Japan</td>
-          <td>101.1</td>
-          <td>88</td>
-          <td>21</td>
-          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
-        </tr>
-        <tr>
-          <th scope="row">WD2</th>
-          <td><a href="#">Naoko Fukuman</a></td>
-          <td>Japan</td>
-          <td>52.8</td>
-          <td>88</td>
-          <td>21</td>
-          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
-        </tr>
-        <tr>
-          <th scope="row">XD1</th>
-          <td><a href="#">Zheng Siwei</a></td>
-          <td>China</td>
-          <td>115</td>
-          <td>88</td>
-          <td>21</td>
-          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
-        </tr>
-        <tr>
-          <th scope="row">XD2</th>
-          <td><a href="#">Huang Dongping</a></td>
-          <td>China</td>
-          <td>95.5</td>
-          <td>88</td>
-          <td>21</td>
-          <td><button type="button" class="btn btn-danger" href="#">Sell</button></td>
-        </tr>
+      {% endfor %}
       </tbody>
     </table>
     </div> 
@@ -134,11 +109,11 @@
             <tbody>
               <tr>
                 <th scope="row">BUDGET (£)</th>
-                <td>0.5</td>
+                <td>{{ team.budget }}</td>
               </tr>
               <tr>
                 <th scope="row">TEAM VALUE (£)</th>
-                <td>128.8</td>
+                <td>{{ team.get_team_value }}</td>
               </tr> 
             </tbody>
           </table>

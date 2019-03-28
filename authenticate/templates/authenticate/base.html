@@ -57,9 +57,14 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'news' %}">Badminton News</a>
       </li>
+      {% if user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'my_team' %}">Teams</a>
+        <a class="nav-link" href="{% url 'my_team' %}">My Team</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'buy_players' %}">Buy players</a>
+      </li>
+      {% endif %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'transfers' %}">Pick your team</a>
       </li>
