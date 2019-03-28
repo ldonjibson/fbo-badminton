@@ -28,6 +28,15 @@ class Teams(models.Model): # team model, players(Rankings model) have foreign ke
 		return self.owner.username
 
 
+class ArchiveRecord(models.Model): # an archive record
+	team = models.ForeignKey(Teams, on_delete=models.CASCADE) # relation to a team
+	score = models.IntegerField() # score
+
+
+class PlayerTournamentRecord(models.Model): # an archive record
+	score = models.IntegerField() # score
+
+
 class Ranking(models.Model):
 	rank = models.CharField(max_length=50)
 	name = models.CharField(max_length=50)
@@ -44,7 +53,8 @@ class Ranking(models.Model):
 	player = models.SlugField()
 	picture = models.ImageField(default='default.png', blank=True)
 	playing = models.BooleanField(default=True)
-
+	current_tournament_score = models.ForeignKey(PlayerTournamentRecord, on_delete=models.CASCADE)
+	last_tournament_score = models.ForeignKey(PlayerTournamentRecord, on_delete=models.CASCADE, related_name='player')
 
 	def __str__(self):
 		return self.rank + ' ' + self.name + ' ' + str(self.playing)
@@ -71,6 +81,3 @@ class XDPlayer(Ranking):
 	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='XDplayers')  # connection to a team
 
 
-class ArchiveRecord(models.Model): # an archive record
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE) # relation to a team
-	score = models.IntegerField() # score
