@@ -11,17 +11,17 @@
 	    {{ teambox.username }}
 	  </div>
 	  <ul class="list-group list-group-flush">
-	    <li class="list-group-item"><strong>Men's Singles 1:</strong> {{ teambox.MS1 }}</li>
-	    <li class="list-group-item"><strong>Men's Singles 2:</strong> {{ teambox.MS2 }}</li>
-	    <li class="list-group-item"><strong>Women's Singles 1:</strong> {{ teambox.WS1 }}</li>
-	    <li class="list-group-item"><strong>Women's Singles 2:</strong> {{ teambox.WS2 }}</li>
-	    <li class="list-group-item"><strong>Men's Doubles 1:</strong> {{ teambox.MD1 }}</li>
-	    <li class="list-group-item"><strong>Men's Doubles 2:</strong> {{ teambox.MD2 }}</li>
-	    <li class="list-group-item"><strong>Women's Doubles 1:</strong> {{ teambox.WD1 }}</li>
-	    <li class="list-group-item"><strong>Women's Doubles 2:</strong> {{ teambox.WD2 }}</li>
-	    <li class="list-group-item"><strong>Mixed Doubles 1:</strong> {{ teambox.XD2 }}</li>
-	    <li class="list-group-item"><strong>Mixed Doubles 2:</strong> {{ teambox.XD2 }}</li>
-	    <li class="list-group-item"><strong>TOTAL POINTS: {{ teambox.points }}</strong></li>
+	    <li class="list-group-item"><strong>Men's Singles 1:</strong> {% if MSplayers.0 %}{{ MSplayers.0 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>Men's Singles 2:</strong> {% if MSplayers.1 %}{{ MSplayers.1 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>Women's Singles 1:</strong> {% if WSplayers.0 %}{{ WSplayers.0 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>Women's Singles 2:</strong> {% if WSplayers.1 %}{{ WSplayers.1 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>Men's Doubles 1:</strong> {% if MDplayers.0 %}{{ MDplayers.0 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>Men's Doubles 2:</strong> {% if MDplayers.1 %}{{ MDplayers.1 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>Women's Doubles 1:</strong> {% if WDplayers.0 %}{{ WDplayers.0 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>Women's Doubles 2:</strong> {% if WDplayers.1 %}{{ WDplayers.1 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>Mixed Doubles 1:</strong> {% if XDplayers.0 %}{{ XDplayers.0 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>Mixed Doubles 2:</strong> {% if XDplayers.1 %}{{ XDplayers.1 }}{% else %}No player{% endif %}</li>
+	    <li class="list-group-item"><strong>TOTAL POINTS: {{ teampoints }}</strong></li>
 	  </ul>
 	</div>
 </div>
