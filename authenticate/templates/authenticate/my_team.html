@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1>Teams</h1>
+<h1>Your team</h1>
 
 <div class="card-deck">
   <div class="card border-danger mb-3">
@@ -39,7 +39,7 @@
           <td>{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+
         </tr>
       {% endfor %}
       {% for player in WSplayers %}
@@ -50,7 +50,7 @@
           <td>{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+
         </tr>
       {% endfor %}
       {% for player in MDplayers %}
@@ -62,7 +62,7 @@
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
 
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+
         </tr>
       {% endfor %}
       {% for player in WDplayers %}
@@ -73,7 +73,7 @@
           <td>{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+
         </tr>
       {% endfor %}
       {% for player in XDplayers %}
@@ -84,7 +84,7 @@
           <td>{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+
         </tr>
       {% endfor %}
       </tbody>

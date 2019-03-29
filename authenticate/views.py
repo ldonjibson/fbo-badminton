@@ -147,17 +147,22 @@ def sell_player(request, player_pk, player_type):
 	user_team.save()
 	player.team = None
 	player.save()
-	return redirect('my_team')
+	return redirect('buy_players')
 
 
 def buy_players_index(request):
 	user_team = Teams.objects.filter(owner=request.user).first()
 	context = {}
-	context['MSplayers'] = list(MSPlayer.objects.filter(team=None))
-	context['WSplayers'] = list(WSPlayer.objects.filter(team=None))
-	context['WDplayers'] = list(WDPlayer.objects.filter(team=None))
-	context['MDplayers'] = list(MDPlayer.objects.filter(team=None))
-	context['XDplayers'] = list(XDPlayer.objects.filter(team=None))
+	context['MSplayers_user'] = MSPlayer.objects.filter(team=user_team)
+	context['WSplayers_user'] = WSPlayer.objects.filter(team=user_team)
+	context['WDplayers_user'] = WDPlayer.objects.filter(team=user_team)
+	context['MDplayers_user'] = MDPlayer.objects.filter(team=user_team)
+	context['XDplayers_user'] = XDPlayer.objects.filter(team=user_team)
+	context['MSplayers'] = list(MSPlayer.objects.all())
+	context['WSplayers'] = list(WSPlayer.objects.all())
+	context['WDplayers'] = list(WDPlayer.objects.all())
+	context['MDplayers'] = list(MDPlayer.objects.all())
+	context['XDplayers'] = list(XDPlayer.objects.all())
 	context['team'] = user_team
 	return render(request, 'authenticate/vacant_players.html', context)
 
