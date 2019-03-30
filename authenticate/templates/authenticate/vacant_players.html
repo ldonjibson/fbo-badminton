@@ -9,7 +9,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm">
-    <table class="table table-hover">
+    <table class="table table-hover" id="your-table">
     <thead>
         <tr>
             <th scope="col">Event</th>
@@ -22,59 +22,59 @@
       </thead>
       <tbody>
       {% for player in MSplayers_user %}
-        <tr>
-          <th scope="row">MS{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">MS{{ forloop.counter }}</th>
+          <td class="player-name"><a href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+          <td><a class="btn btn-danger sell" role="button">Sell</a></td>
         </tr>
       {% endfor %}
       {% for player in WSplayers_user %}
-        <tr>
-          <th scope="row">WS{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">WS{{ forloop.counter }}</th>
+          <td class="player-name"><a href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+          <td><a class="btn btn-danger sell" role="button">Sell</a></td>
         </tr>
       {% endfor %}
       {% for player in MDplayers_user %}
-        <tr>
-          <th scope="row">MD{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">MD{{ forloop.counter }}</th>
+          <td class="player-name"><a href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
 
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+          <td><a class="btn btn-danger sell" role="button">Sell</a></td>
         </tr>
       {% endfor %}
       {% for player in WDplayers_user %}
-        <tr>
-          <th scope="row">WD{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">WD{{ forloop.counter }}</th>
+          <td class="player-name"><a href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+          <td><a class="btn btn-danger sell" role="button">Sell</a></td>
         </tr>
       {% endfor %}
       {% for player in XDplayer_user %}
-        <tr>
-          <th scope="row">XD{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">XD{{ forloop.counter }}</th>
+          <td class="player-name"><a href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
-          <td><a href="{% url 'sell_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Sell</a></td>
+          <td><a class="btn btn-danger sell" role="button">Sell</a></td>
         </tr>
       {% endfor %}
       </tbody>
@@ -83,7 +83,7 @@
 	<div class="row">
 	<div class="col-sm">
 	<h1>Players list</h1>
-	<table class="table table-hover">
+	<table class="table table-hover" id="vacant-table">
 
     <thead>
         <tr>
@@ -98,18 +98,18 @@
       <tbody>
 
       {% for player in MSplayers %}
-        <tr>
-          <th scope="row">MS</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">MS</th>
+          <td><a class="player-name" href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
           <td>{% if not player.team %}
-          {% if team.MSplayers.all|length < 3 %}
-	          <a href="{% url 'buy_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Buy</a>
+          {% if team.MSplayers.all|length < 2 %}
+	          <a class="btn btn-danger buy" role="button">Buy</a>
           {% else %}
-	          <a class="btn btn-danger" role="button">No slots for {{ player.get_type }}</a>
+	          <a class="" role="button">No slots for {{ player.get_type }}</a>
           {% endif %}</td>
           {% else %}
 	          <a class="btn btn-secondary" role="button" disabled>Buy</a>
@@ -118,18 +118,18 @@
         </tr>
       {% endfor %}
       {% for player in WSplayers %}
-        <tr>
-          <th scope="row">WS</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">WS</th>
+          <td class="player-name" ><a href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+         <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
           <td>{% if not player.team %}
-          {% if team.WSplayers.all|length < 3 %}
-	          <a href="{% url 'buy_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Buy</a>
+          {% if team.WSplayers.all|length < 2 %}
+	          <a class="btn btn-danger buy" role="button">Buy</a>
           {% else %}
-	          <a class="btn btn-danger" role="button">No slots for {{ player.get_type }}</a>
+	          <a class="" role="button">No slots for {{ player.get_type }}</a>
           {% endif %}</td>
           {% else %}
 	          <a class="btn btn-secondary" role="button" disabled>Buy</a>
@@ -138,19 +138,19 @@
         </tr>
       {% endfor %}
       {% for player in MDplayers %}
-        <tr>
-          <th scope="row">MD</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">MD</th>
+          <td class="player-name"><a href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
 
           <td>{% if not player.team %}
-          {% if team.MDplayers.all|length < 3 %}
-	          <a href="{% url 'buy_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Buy</a>
+          {% if team.MDplayers.all|length < 2 %}
+	          <a  class="btn btn-danger buy" role="button">Buy</a>
           {% else %}
-	          <a class="btn btn-danger" role="button">No slots for {{ player.get_type }}</a>
+	          <a class="" role="button">No slots for {{ player.get_type }}</a>
           {% endif %}</td>
           {% else %}
 	          <a class="btn btn-secondary" role="button" disabled>Buy</a>
@@ -159,18 +159,18 @@
         </tr>
       {% endfor %}
       {% for player in WDplayers %}
-        <tr>
-          <th scope="row">WD</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">WD</th>
+          <td class="player-name"><a href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
           <td>{% if not player.team %}
-          {% if team.WDplayers.all|length < 3 %}
-	          <a href="{% url 'buy_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Buy</a>
+          {% if team.WDplayers.all|length < 2 %}
+	          <a class="btn btn-danger buy" role="button">Buy</a>
           {% else %}
-	          <a class="btn btn-danger" role="button">No slots for {{ player.get_type }}</a>
+	          <a class="" role="button">No slots for {{ player.get_type }}</a>
           {% endif %}</td>
           {% else %}
 	          <a class="btn btn-secondary" role="button" disabled>Buy</a>
@@ -179,18 +179,18 @@
         </tr>
       {% endfor %}
       {% for player in XDplayers %}
-        <tr>
-          <th scope="row">XD</th>
-          <td><a href="#">{{ player.name }}</a></td>
+        <tr class="{{ player.id }}">
+          <th class="player-type" scope="row">XD</th>
+          <td class="player-name"><a href="#">{{ player.name }}</a></td>
           <td>{{ player.country }}</td>
-          <td>{{ player.cost }}</td>
+          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
           <td>{% if not player.team %}
-          {% if team.XDplayers.all|length < 3 %}
-	          <a href="{% url 'buy_player' player_type=player.get_type player_pk=player.pk %}" class="btn btn-danger" role="button">Buy</a>
+          {% if team.XDplayers.all|length < 2 %}
+	          <a class="btn btn-danger buy" role="button">Buy</a>
           {% else %}
-	          <a class="btn btn-danger" role="button">No slots for {{ player.get_type }}</a>
+	          <a class="" role="button">No slots for {{ player.get_type }}</a>
           {% endif %}</td>
           {% else %}
 	          <a class="btn btn-secondary" role="button" disabled>Buy</a>
@@ -220,7 +220,7 @@
             <tbody>
               <tr>
                 <th scope="row">BUDGET (£)</th>
-                <td>{{ team.budget }}</td>
+                <td id="budget">{{ team.budget }}</td>
               </tr>
               <tr>
                 <th scope="row">TEAM VALUE (£)</th>
@@ -239,6 +239,58 @@
 </div> 
             
 </br>
+	<script>
+	var d = document,
+    vacantTable = d.getElementById('vacant-table');
+	yourTable = d.getElementById('your-table');
+	playersToBuy = [];
+	playersToSell = [];
+	budgetDOM = d.getElementById('budget');
+	budget = d.getElementById('budget').innerHTML;
+
+
+
+	var handleCart = function(e){
+		const element = this.parentElement.parentElement;
+	    let name = element.getElementsByClassName('player-name')[0].text,
+	        type = element.getElementsByClassName('player-type')[0].innerHTML,
+	        id = $(this).closest('tr')[0].className,
+			cost = element.getElementsByClassName('player-cost')[0].innerHTML,
+			row = $(this).closest('tr').remove().clone(true);
+
+
+
+        if (this.className == 'btn btn-danger buy'){
+		  $('#your-table tbody').append(row);
+		  playersToBuy.push([id, type, name]);
+		  row.find('a')[1].innerHTML = 'Bought';
+          budgetDOM.innerHTML = Number(budget) - Number(cost);
+		} else {
+		  $('#vacant-table tbody').append(row);
+		  playersToSell.push([id, type, name]);
+		  row.find('a')[1].innerHTML = 'Sold';
+          budgetDOM.innerHTML = Number(budget) + Number(cost);
+		}
+
+
+	    return false;
+	}
+
+	var buttonsVacant = vacantTable.getElementsByClassName('btn btn-danger buy');
+
+	for (var i = 0; i < buttonsVacant.length; i++) {
+        buttonsVacant[i].addEventListener('click', handleCart, false);
+    }
+
+	var buttonsYours = yourTable.getElementsByClassName('btn btn-danger sell');
+
+	for (var i = 0; i < buttonsYours.length; i++) {
+	    buttonsYours[i].addEventListener('click', handleCart, false);
+	}
+
+
+
+	</script>
 
 
 {% endif %}
