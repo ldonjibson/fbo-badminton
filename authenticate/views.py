@@ -195,7 +195,7 @@ def process_cart(request):
         ids = players_to_buy[::2]
         players = []
         for type, id in zip(types, ids):
-            players.append(get_player(type, id))
+            players.append(get_player(type[:2], id))
 
         if user_team.budget < sum([x.cost for x in players]):
             messages.success(request, ("You don't have enough funds"))
@@ -212,7 +212,7 @@ def process_cart(request):
         types = players_to_sell[1::2]
         ids = players_to_sell[::2]
         for type, id in zip(types, ids):
-            player = get_player(type, id)
+            player = get_player(type[:2], id)
             sell_player(request, player)
 
     return redirect('my_team')
