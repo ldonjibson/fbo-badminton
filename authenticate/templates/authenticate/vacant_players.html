@@ -245,8 +245,8 @@
 	var d = document,
     vacantTable = d.getElementById('vacant-table');
 	yourTable = d.getElementById('your-table');
-	playersToBuy = [];
-	playersToSell = [];
+	playersToBuy = {};
+	playersToSell = {};
 	budgetDOM = d.getElementById('budget');
 	budget = d.getElementById('budget').innerHTML;
 	form = $('form')[0];
@@ -267,20 +267,50 @@
         if (this.className == 'btn btn-danger buy'){
 		  $('#your-table tbody').append(row);
 		  $(rowButton).removeClass('btn btn-danger buy').addClass('btn btn-danger sell');
-		  playersToBuy.push([id, type]);
-		  row.find('a')[1].innerHTML = 'Bought(cancel)';
+		  if (rowButton.style.backgroundColor === "green"){
+              if (type.length === 2) {
+                  playersToBuy[type+id] = 0;
+              } else {
+                  playersToSell[type+id] = 0;
+              }
+              rowButton.style.backgroundColor = "";
+	          rowButton.innerHTML = 'Sell';
+	        } else {
+              if (type.length === 2) {
+                  playersToBuy[type+id] = 1;
+              } else {
+                  playersToSell[type+id] = 1;
+              }
+              rowButton.style.backgroundColor = "green";
+              row.find('a')[1].innerHTML = 'Bought(cancel)';
+          }
           budgetDOM.innerHTML = Number(budget) - Number(cost);
           budget = Number(budget) - Number(cost);
 		} else {
 		  $('#vacant-table tbody').append(row);
           $(rowButton).removeClass('btn btn-danger sell').addClass('btn btn-danger buy');
-		  playersToSell.push([id, type]);
-		  row.find('a')[1].innerHTML = 'Sold(cancel)';
+          if (rowButton.style.backgroundColor === "green"){
+              if (type.length === 2) {
+                  playersToBuy[type+id] = 0;
+              } else {
+                  playersToSell[type+id] = 0;
+              }
+              rowButton.style.backgroundColor = "";
+              $(rowButton).css("background-color", "");
+	          rowButton.innerHTML = 'Buy';
+	        } else {
+              if (type.length === 2) {
+                  playersToBuy[type+id] = 1;
+              } else {
+                  playersToSell[type+id] = 1;
+              }
+              rowButton.style.backgroundColor = "green";
+	          row.find('a')[1].innerHTML = 'Bought(cancel)';
+          }
           budgetDOM.innerHTML = Number(budget) + Number(cost);
           budget = Number(budget) + Number(cost);
 		}
 		rowButton.addEventListener('click', handleCart, false);
-        rowButton.style.backgroundColor ="green";
 	    return false;
 	}
 
@@ -288,12 +318,12 @@
 	   $('<input>', {
 		    type: 'hidden',
 		    name: 'sell',
-		    value: playersToSell
+		    value: JSON.stringify(playersToSell)
 		}).appendTo('form');
 	   $('<input>', {
 		    type: 'hidden',
 		    name: 'buy',
-		    value: playersToBuy
+		    value: JSON.stringify(playersToBuy)
 		}).appendTo('form');
 	});
 
@@ -309,10 +339,6 @@
 	for (var i = 0; i < buttonsYours.length; i++) {
 	    buttonsYours[i].addEventListener('click', handleCart, false);
 	}
-
-
-
-
 
 	</script>
 

@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, Password
 from django.contrib import messages
 from .forms import SignUpForm, EditProfileForm
 from .models import *
+import json
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -133,17 +134,49 @@ def get_player(player_type, player_pk):
     return player
 
 
-def my_team(request):
-	user = request.user
-	context = {}
-	user_team = Teams.objects.filter(owner=user).first()
-	context['MSplayers'] = MSPlayer.objects.filter(team=user_team)
-	context['WSplayers'] = WSPlayer.objects.filter(team=user_team)
-	context['WDplayers'] = WDPlayer.objects.filter(team=user_team)
-	context['MDplayers'] = MDPlayer.objects.filter(team=user_team)
-	context['XDplayers'] = XDPlayer.objects.filter(team=user_team)
-	context['team'] = user_team
-	return render(request, 'authenticate/my_team.html', context)
+def check_team_for_slots(user, player):
+    player_type = player.get_type()
+    user_team = Teams.objects.filter(owner = user).first()
+    if player_type == 'MS':
+        if len(user_team.MSplayers.all()) < 2:
+            return False
+        else:
+            return "Not enough MS Slots"
+    elif player_type == 'WS':
+        if len(user_team.WSplayers.all()) < 2:
+            return False
+        else:
+            return "Not enough WS Slots"
+    elif player_type == 'MD':
+        if len(user_team.MDplayers.all()) < 2:
+            return False
+        else:
+            return "Not enough MD Slots"
+    elif player_type == 'WD':
+        if len(user_team.WDplayers.all()) < 2:
+            return False
+        else:
+            return "Not enough WD Slots"
+    else:
+        if len(user_team.XDplayers.all()) < 2:
+            return False
+        else:
+            return "Not enough XD Slots"
+
+
+def my_team(request, message=False):
+    user = request.user
+    context = {}
+    user_team = Teams.objects.filter(owner=user).first()
+    context['MSplayers'] = MSPlayer.objects.filter(team=user_team)
+    context['WSplayers'] = WSPlayer.objects.filter(team=user_team)
+    context['WDplayers'] = WDPlayer.objects.filter(team=user_team)
+    context['MDplayers'] = MDPlayer.objects.filter(team=user_team)
+    context['XDplayers'] = XDPlayer.objects.filter(team=user_team)
+    context['team'] = user_team
+    if message:
+        messages.success(request, ("Successfully saved your team"))
+    return render(request, 'authenticate/my_team.html', context)
 
 
 def sell_player(request, player):
@@ -187,17 +220,18 @@ def buy_player(request, player):
 def process_cart(request):
     user = request.user
     user_team = Teams.objects.filter(owner=user).first()
-    players_to_sell = request.POST.get('sell')
-    players_to_buy = request.POST.get('buy')
+    players_to_sell = json.loads(request.POST.get('sell'))
+    players_to_buy = json.loads(request.POST.get('buy'))
+    print(players_to_sell, players_to_buy)
     if players_to_buy and players_to_sell:
         pass
     if players_to_buy:
-        players_to_buy = players_to_buy.split(',')
-        types = players_to_buy[1::2]
-        ids = players_to_buy[::2]
         players = []
-        for type, id in zip(types, ids):
-            players.append(get_player(type[:2], id))
+        for key in players_to_buy.keys():
+            if players_to_buy[key]:
+                type = key[:2]
+                id = int(key[2:])
+                players.append(get_player(type, id))
 
         if user_team.budget < sum([x.cost for x in players]):
             messages.success(request, ("You don't have enough funds"))
@@ -207,17 +241,22 @@ def process_cart(request):
             return redirect('buy_players')
 
         for player in players:
-            buy_player(request, player)
+            if check_team_for_slots(request.user, player):
+                message = check_team_for_slots(request.user, player)
+                messages.success(request, message)
+                return redirect('buy_players')
+            else:
+                buy_player(request, player)
 
     if players_to_sell:
-        players_to_sell = players_to_sell.split(',')
-        types = players_to_sell[1::2]
-        ids = players_to_sell[::2]
-        for type, id in zip(types, ids):
-            player = get_player(type[:2], id)
-            sell_player(request, player)
+        for key in players_to_sell.keys():
+            if players_to_sell[key]:
+                type = key[:2]
+                id = int(key[3:])
+                player = get_player(type, id)
+                sell_player(request, player)
 
-    return redirect('my_team')
+    return redirect('my_team', message=True)
 
 
 #attempt at api content for news page
