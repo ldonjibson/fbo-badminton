@@ -80,8 +80,8 @@
       </tbody>
     </table>
     </div>
-  <div class="row col-sm" ><form id="form" action="{% url "buy_player" player_type=1 player_pk=1 %}"
-         method="POST">{% csrf_token %}<button class="btn btn-danger">SUBMIT</button></form></div>
+  <div class="row col-sm" ><form id="form" action="{% url 'buy_bulk' %}"
+         method="POST">{% csrf_token %}<input type="submit" class="btn btn-danger" value="SUBMIT"></form></div>
 	<div class="row">
 	<div class="col-sm">
 	<h1>Players list</h1>
@@ -267,23 +267,37 @@
 
         if (this.className == 'btn btn-danger buy'){
 		  $('#your-table tbody').append(row);
-		  playersToBuy.push([id, type, name]);
-		  formData.append('buy', playersToBuy)
+		  playersToBuy.push([id, type]);
 		  row.find('a')[1].innerHTML = 'Bought';
           budgetDOM.innerHTML = Number(budget) - Number(cost);
           budget = Number(budget) - Number(cost);
 		} else {
 		  $('#vacant-table tbody').append(row);
-		  playersToSell.push([id, type, name]);
-		  formData.append('sell', playersToSell)
+		  playersToSell.push([id, type]);
 		  row.find('a')[1].innerHTML = 'Sold';
           budgetDOM.innerHTML = Number(budget) + Number(cost);
           budget = Number(budget) + Number(cost);
 		}
 
-
 	    return false;
 	}
+
+	$('#form').submit(function () {
+	   $('<input>', {
+		    type: 'hidden',
+		    name: 'sell',
+		    value: playersToSell
+		}).appendTo('form');
+	   $('<input>', {
+		    type: 'hidden',
+		    name: 'buy',
+		    value: playersToBuy
+		}).appendTo('form');
+	});
+
+
+
+
 
 	var buttonsVacant = vacantTable.getElementsByClassName('btn btn-danger buy');
 
@@ -296,6 +310,8 @@
 	for (var i = 0; i < buttonsYours.length; i++) {
 	    buttonsYours[i].addEventListener('click', handleCart, false);
 	}
+
+
 
 
 

@@ -117,6 +117,22 @@ def transfers(request):
 	all_ranking = Ranking.objects.filter().order_by('-last')
 	return render(request, 'authenticate/transfers.html', {'all_ranking': all_ranking })
 
+
+
+def get_player(player_type, player_pk):
+    if player_type == 'MS':
+        player = MSPlayer.objects.get(pk=player_pk)
+    elif player_type == 'WS':
+        player = WSPlayer.objects.get(pk=player_pk)
+    elif player_type == 'MD':
+        player = MDPlayer.objects.get(pk=player_pk)
+    elif player_type == 'WD':
+        player = WDPlayer.objects.get(pk=player_pk)
+    else:
+        player = XDPlayer.objects.get(pk=player_pk)
+    return player
+
+
 def my_team(request):
 	user = request.user
 	context = {}
@@ -130,24 +146,14 @@ def my_team(request):
 	return render(request, 'authenticate/my_team.html', context)
 
 
-def sell_player(request, player_pk, player_type):
-	user = request.user
-	user_team = Teams.objects.filter(owner=user).first()
-	if player_type == 'MS':
-		player = MSPlayer.objects.get(pk=player_pk)
-	elif player_type == 'WS':
-		player = WSPlayer.objects.get(pk=player_pk)
-	elif player_type == 'MD':
-		player = MDPlayer.objects.get(pk=player_pk)
-	elif player_type == 'WD':
-		player = WDPlayer.objects.get(pk=player_pk)
-	else:
-		player = XDPlayer.objects.get(pk=player_pk)
-	user_team.budget += player.cost
-	user_team.save()
-	player.team = None
-	player.save()
-	return redirect('buy_players')
+def sell_player(request, player):
+    user = request.user
+    user_team = Teams.objects.filter(owner = user).first()
+    user_team.budget += player.cost
+    user_team.save()
+    player.team = None
+    player.save()
+
 
 
 def buy_players_index(request):
@@ -167,30 +173,49 @@ def buy_players_index(request):
 	return render(request, 'authenticate/vacant_players.html', context)
 
 
-def buy_player(request, player_type, player_pk):
+def buy_player(request, player):
 	user = request.user
 	user_team = Teams.objects.filter(owner=user).first()
-	if player_type == 'MS':
-		player = MSPlayer.objects.get(pk=player_pk)
-	elif player_type == 'WS':
-		player = WSPlayer.objects.get(pk=player_pk)
-	elif player_type == 'MD':
-		player = MDPlayer.objects.get(pk=player_pk)
-	elif player_type == 'WD':
-		player = WDPlayer.objects.get(pk=player_pk)
-	else:
-		player = XDPlayer.objects.get(pk=player_pk)
-	if user_team.budget < player.cost:
-		messages.success(request, ("You don't have enough funds"))
-		return redirect('buy_players')
-	if user_team.get_team_value() + player.cost > 120:
-		messages.success(request, ("Your team's cost can't exceed 120"))
-		return redirect('buy_players')
 	user_team.budget -= player.cost
 	user_team.save()
 	player.team = user_team
 	player.save()
-	return redirect('buy_players')
+
+
+
+
+def process_cart(request):
+    user = request.user
+    user_team = Teams.objects.filter(owner=user).first()
+    players_to_sell = request.POST.get('sell')
+    players_to_buy = request.POST.get('buy')
+    if players_to_buy:
+        players_to_buy = players_to_buy.split(',')
+        types = players_to_buy[1::2]
+        ids = players_to_buy[::2]
+        players = []
+        for type, id in zip(types, ids):
+            players.append(get_player(type, id))
+
+        if user_team.budget < sum([x.cost for x in players]):
+            messages.success(request, ("You don't have enough funds"))
+            return redirect('buy_players')
+        if user_team.get_team_value() + sum([x.cost for x in players]) > 120:
+            messages.success(request, ("Your team's cost can't exceed 120"))
+            return redirect('buy_players')
+
+        for player in players:
+            buy_player(request, player)
+
+    if players_to_sell:
+        players_to_sell = players_to_sell.split(',')
+        types = players_to_sell[1::2]
+        ids = players_to_sell[::2]
+        for type, id in zip(types, ids):
+            player = get_player(type, id)
+            sell_player(request, player)
+
+    return redirect('my_team')
 
 
 #attempt at api content for news page
