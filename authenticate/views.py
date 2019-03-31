@@ -189,6 +189,8 @@ def process_cart(request):
     user_team = Teams.objects.filter(owner=user).first()
     players_to_sell = request.POST.get('sell')
     players_to_buy = request.POST.get('buy')
+    if players_to_buy and players_to_sell:
+        pass
     if players_to_buy:
         players_to_buy = players_to_buy.split(',')
         types = players_to_buy[1::2]
