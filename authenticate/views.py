@@ -256,7 +256,7 @@ def process_cart(request):
                 player = get_player(type, id)
                 sell_player(request, player)
 
-    return redirect('my_team', message=True)
+    return my_team(request, message=True)
 
 
 #attempt at api content for news page
