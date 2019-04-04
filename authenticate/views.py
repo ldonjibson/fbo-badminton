@@ -203,6 +203,13 @@ def buy_players_index(request):
 	context['MDplayers'] = list(MDPlayer.objects.all())
 	context['XDplayers'] = list(XDPlayer.objects.all())
 	context['team'] = user_team
+	players_data_for_js = {}
+	players_data_for_js['MS'] = len(MSPlayer.objects.filter(team=user_team))
+	players_data_for_js['WS'] = len(WSPlayer.objects.filter(team=user_team))
+	players_data_for_js['WD'] = len(WDPlayer.objects.filter(team=user_team))
+	players_data_for_js['MD'] = len(MDPlayer.objects.filter(team=user_team))
+	players_data_for_js['XD'] = len(XDPlayer.objects.filter(team=user_team))
+	context['data'] = json.dumps(players_data_for_js)
 	return render(request, 'authenticate/vacant_players.html', context)
 
 

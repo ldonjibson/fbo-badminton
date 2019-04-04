@@ -238,7 +238,7 @@
 	</div>
 	</div>
   </div>
-</div> 
+</div>
             
 </br>
 	<script>
@@ -251,7 +251,31 @@
 	budget = d.getElementById('budget').innerHTML;
 	form = $('form')[0];
 	formData = new FormData(form);
+	playerData = jQuery.parseJSON('{{data|safe}}');
+	console.log(playerData)
 
+	var checkTeamSpace = function(){
+        for (var i = 0; i < buttonsVacant.length; i++) {
+            let row = jQuery.extend(true, {}, $(buttonsVacant[i]).closest('tr')),
+	            element = buttonsVacant[i].parentElement.parentElement,
+                type = element.getElementsByClassName('player-type')[0].innerHTML,
+	            rowButton = row.find('a')[1];
+		    if(playerData[type] > 1){
+		        buttonsVacant[i].removeEventListener("click", handleCart, false);
+		        rowButton.style.backgroundColor = "white";
+				row.find('a')[1].innerHTML = 'No slots for ' + type;
+		    } else {
+                buttonsVacant[i].addEventListener('click', handleCart, false);
+                rowButton.style.backgroundColor = "";
+                row.find('a')[1].innerHTML = 'buy';
+            }
+            if (rowButton.className==='btn btn-secondary'){
+		        rowButton.removeEventListener("click", handleCart, false);
+            } else {
+
+            }
+	    }
+	};
 
 	var handleCart = function(e){
 		const element = this.parentElement.parentElement;
@@ -262,57 +286,61 @@
 			row = jQuery.extend(true, {}, $(this).closest('tr'));
 			let rowButton = row.find('a')[1];
 
-		$(this).closest('tr').remove();
+
 
         if (this.className == 'btn btn-danger buy'){
-		  $('#your-table tbody').append(row);
-		  $(rowButton).removeClass('btn btn-danger buy').addClass('btn btn-danger sell');
-		  if (rowButton.style.backgroundColor === "green"){
-              if (type.length === 2) {
-                  playersToBuy[type+id] = 0;
-              } else {
-                  playersToSell[type+id] = 0;
-              }
-              rowButton.style.backgroundColor = "";
-	          rowButton.innerHTML = 'Sell';
-	        } else {
-              if (type.length === 2) {
-                  playersToBuy[type+id] = 1;
-              } else {
-                  playersToSell[type+id] = 1;
-              }
-              rowButton.style.backgroundColor = "green";
-              row.find('a')[1].innerHTML = 'Bought(cancel)';
+          var rowCopy = row.clone();
+                rowCopyButton = rowCopy.find('a')[1];
+		  $(rowButton).removeClass('btn btn-danger buy').addClass('btn btn-secondary');
+
+          if (type.length === 2) {
+              playersToBuy[type+id] = 1;
+              playerData[type] += 1;
+          } else {
+              playersToSell[type+id] = 1;
+              playerData[type.substring(0, 2)] += 1;
           }
+          rowCopyButton.style.backgroundColor = "#ADFF2F";
+          $(rowCopyButton).removeClass('btn btn-danger buy').addClass('btn btn-danger sell');
+          rowCopyButton.addEventListener('click', handleCart, false);
+          rowCopy.find('a')[1].innerHTML = 'Sell';
           budgetDOM.innerHTML = Number(budget) - Number(cost);
           budget = Number(budget) - Number(cost);
+          $('#your-table tbody').append(rowCopy);
 		} else {
-		  $('#vacant-table tbody').append(row);
-          $(rowButton).removeClass('btn btn-danger sell').addClass('btn btn-danger buy');
-          if (rowButton.style.backgroundColor === "green"){
-              if (type.length === 2) {
-                  playersToBuy[type+id] = 0;
-              } else {
-                  playersToSell[type+id] = 0;
-              }
-              rowButton.style.backgroundColor = "";
-              $(rowButton).css("background-color", "");
-	          rowButton.innerHTML = 'Buy';
-	        } else {
-              if (type.length === 2) {
-                  playersToBuy[type+id] = 1;
-              } else {
-                  playersToSell[type+id] = 1;
-              }
-              rowButton.style.backgroundColor = "green";
-	          row.find('a')[1].innerHTML = 'Bought(cancel)';
+          a = d.querySelectorAll("[class=" + CSS.escape(id) + "]");
+		  for (var i = 0; i < a.length; i++) {
+		      if (a[i].getElementsByClassName('player-type')[0].innerHTML === type.substring(0, 2)){
+		          soldPlayerInAllList = a[i];
+		      }
+		    }
+
+		  button = $(soldPlayerInAllList).find('a')[1];
+		  $(button).removeClass('btn btn-secondary').addClass('btn btn-danger buy');
+
+          if (type.length === 2) {
+              playersToBuy[type+id] = 1;
+              playerData[type] -= 1;
+          } else {
+              playersToSell[type+id] = 1;
+              playerData[type.substring(0, 2)] -= 1;
           }
+          console.log(playerData)
+          rowButton.style.backgroundColor = "#ADFF2F";
+          row.find('a')[1].innerHTML = 'Sold';
+
           budgetDOM.innerHTML = Number(budget) + Number(cost);
           budget = Number(budget) + Number(cost);
+          this.parentElement.parentElement.parentNode.removeChild(this.parentElement.parentElement);
 		}
-		rowButton.addEventListener('click', handleCart, false);
+		console.log(playerData);
+        vacantTable = d.getElementById('vacant-table');
+		yourTable = d.getElementById('your-table');
+		checkTeamSpace();
+
 	    return false;
 	}
+
 
 	$('#form').submit(function () {
 	   $('<input>', {
@@ -325,10 +353,11 @@
 		    name: 'buy',
 		    value: JSON.stringify(playersToBuy)
 		}).appendTo('form');
+
 	});
 
 
-	var buttonsVacant = vacantTable.getElementsByClassName('btn btn-danger buy');
+	var buttonsVacant = vacantTable.getElementsByClassName('btn');
 
 	for (var i = 0; i < buttonsVacant.length; i++) {
         buttonsVacant[i].addEventListener('click', handleCart, false);
