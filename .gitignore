@@ -1,0 +1,7 @@
+*/__pycache__/
+*.log
+*.pot
+*/migrations/
+*.pyc
+*.pyo
+*.idea/
