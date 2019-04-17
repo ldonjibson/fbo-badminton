@@ -2,12 +2,21 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib import messages
-from .forms import SignUpForm, EditProfileForm
+from .forms import SignUpForm, EditProfileForm, KeyForm
 from .models import *
 import json
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.utils.crypto import get_random_string
+from authenticate.models import League
+from django.urls import reverse_lazy
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.db.models import Q
+
+
 
 
 def home(request):
@@ -265,6 +274,74 @@ def process_cart(request):
 
     return my_team(request, message=True)
 
+
+class LeagueCreate(CreateView):
+	model = League
+	fields = ['name']
+	success_url = reverse_lazy('my_team')
+
+	def form_valid(self, form):
+		obj = form.save(commit=False)
+		obj.owner = self.request.user
+		obj.invite_key = get_random_string(length=32)
+		obj.save()
+		return super().form_valid(form)
+
+
+class LeagueUpdate(UpdateView):
+	model = League
+	fields = ['name']
+	template_name_suffix = '_update_form'
+	success_url = reverse_lazy('my_team')
+
+
+class LeagueDelete(DeleteView):
+    model = League
+    success_url = reverse_lazy('my_team')
+
+
+def join_league(request):
+	if request.method == 'POST':
+		form = KeyForm(request.POST)
+		if form.is_valid():
+			user = request.user
+			key = request.POST['key']
+			league = League.objects.filter(invite_key=key)
+			if league:
+				UserLeagueParticipation.objects.create(user=user, league=league[0])
+				messages.success(request, "Successfully joined league")
+				return HttpResponseRedirect('/my_team/')
+			else:
+				messages.success(request, "League not found")
+	else:
+		form = KeyForm()
+
+	return render(request, 'authenticate/join_league.html', {'form': form})
+
+
+class LeagueList(ListView):
+
+	model = League
+	paginate_by = 20
+
+
+	def get_queryset(self, **kwargs):
+		user = self.request.user
+		qs = super().get_queryset()
+		return qs.filter(Q(owner=user) | Q(users__user=user))
+
+
+class LeagueDetailView(DetailView):
+	model = League
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		members = []
+		for relation in self.object.users.all():
+			members.append(relation.user)
+		owner = self.object.owner
+		context['users'] = members + [owner, ]
+		return context
 
 #attempt at api content for news page
 	#import requests

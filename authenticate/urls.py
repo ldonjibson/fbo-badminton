@@ -24,6 +24,12 @@ urlpatterns = [
 	path('player/<player>', views.player_profile, name='player_profile'),
 	path('teams/<team_pk>', views.team_detail, name='team_detail'),
 	path('my_team/delete/<player_type>/<player_pk>', views.sell_player, name='sell_player'),
+	path('my_team/create_league', views.LeagueCreate.as_view(), name='create_league'),
+	path('my_team/update_league/<pk>', views.LeagueUpdate.as_view(), name='update_league'),
+	path('my_team/update_league/<pk>', views.LeagueDelete.as_view(), name='delete_league'),
+	path('my_team/join_league', views.join_league, name='join_league'),
+	path('my_team/league_list', views.LeagueList.as_view(), name='league_list'),
+	path('my_team/league_list/<pk>', views.LeagueDetailView.as_view(), name='league_detail'),
 
 ]
 

@@ -99,7 +99,9 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><strong>Overall points:</strong> {{ team.get_total_team_points }}<br><strong>Global rank:</strong> 101</br><strong>Total players:</strong> 100,500</li>
           <li class="list-group-item"><strong>Current tournament points:</strong> 69</li>
-          <li class="list-group-item"><a href="#"><strong>Your leagues</strong></a></li>
+          <li class="list-group-item"><a href="{% url 'join_league' %}"><strong>Join a league</strong></a></li>
+          <li class="list-group-item"><a href="{% url 'create_league' %}"><strong>Create a league</strong></a></li>
+          <li class="list-group-item"><a href="{% url 'league_list' %}"><strong>Your leagues</strong></a></li>
         </ul>
       </div>
       <div class="container border-danger">

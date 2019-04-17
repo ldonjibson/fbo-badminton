@@ -1,0 +1,10 @@
+{% extends 'authenticate/base.html' %}
+{% load static %}
+{% block content %}
+	<h1>Members: </h1>
+{% for member in users %}
+    <li>{{ member.username }}</li>
+{% empty %}
+    <li>No leagues yet</li>
+{% endfor %}
+{% endblock %}

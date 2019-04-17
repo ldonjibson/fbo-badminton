@@ -1,0 +1,9 @@
+{% extends 'authenticate/base.html' %}
+{% load static %}
+{% block content %}
+{% for league in object_list %}
+    <li><a href="{% url 'league_detail' pk=league.pk %}">{{ league.name }}</a>{% if league.owner == request.user %} Invite key: {{league.invite_key }}{% endif %}</li>
+{% empty %}
+    <li>No leagues yet</li>
+{% endfor %}
+{% endblock %}

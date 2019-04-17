@@ -104,3 +104,12 @@ class XDPlayer(Ranking):
 	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='XDplayers', null=True, blank=True)  # connection to a team
 
 
+class League(models.Model):
+	name = models.CharField(max_length=50)
+	owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name='owned_leagues')
+	invite_key = models.CharField(max_length=32)
+
+
+class UserLeagueParticipation(models.Model):
+	league = models.ForeignKey(League, related_name='users', on_delete=models.CASCADE)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='leagues', on_delete=models.CASCADE)

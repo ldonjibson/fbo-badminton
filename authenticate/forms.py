@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 from django import forms
+from .models import League
 
 class EditProfileForm(UserChangeForm):
 	password = forms.CharField(label="", widget=forms.TextInput(attrs={'type':'hidden'}))
@@ -47,3 +48,7 @@ class SignUpForm(UserCreationForm):
 		self.fields['password2'].widget.attrs['placeholder'] = 'Confirm password'
 		self.fields['password2'].label = ''
 		self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
+
+
+class KeyForm(forms.Form):
+    key = forms.CharField(label='Enter unique key', max_length=32)
