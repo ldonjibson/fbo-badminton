@@ -5,3 +5,5 @@
 *.pyc
 *.pyo
 *.idea/
+badminton_env/
+
