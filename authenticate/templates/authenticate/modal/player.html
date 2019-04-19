@@ -1,0 +1,23 @@
+<div class="modal fade" id="playerModal{{ player.get_type }}{{ player.id }}">
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			{{ player.name }} - {{ player.get_type }}
+		</div>
+		<div class="modal-body">
+		Country: {{ player.country }}<br>
+		Price: {{ player.cost }}<br>
+		{% if player.current_tournament_score %}
+			Current tournament score:
+			{{ player.current_tournament_score }}
+		{% else %}
+			Currently not in a tournament
+		{% endif %}
+		</div>
+		<div class="modal-footer">
+			<a href="{% url 'player_profile' type=player.get_type pk=player.pk %}"><strong>See profile</strong></a></li>
+		</div>
+
+	</div>
+</div>
+</div>

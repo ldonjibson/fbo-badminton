@@ -19,7 +19,7 @@ class Article(models.Model):
 
 class Teams(models.Model): # team model, players(Rankings model) have foreign key relation to it
 	budget = models.IntegerField(default=120)
-	owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE) # relation to a user
+	owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name='teams') # relation to a user
 	team = models.SlugField()
 	date = models.DateTimeField(auto_now_add=True)
 	points = models.CharField(max_length=50)

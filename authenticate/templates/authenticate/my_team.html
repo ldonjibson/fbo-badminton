@@ -34,7 +34,8 @@
       {% for player in MSplayers %}
         <tr>
           <th scope="row">MS{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td>{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
@@ -45,7 +46,8 @@
       {% for player in WSplayers %}
         <tr>
           <th scope="row">WS{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td>{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
@@ -56,7 +58,8 @@
       {% for player in MDplayers %}
         <tr>
           <th scope="row">MD{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td>{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
@@ -68,7 +71,8 @@
       {% for player in WDplayers %}
         <tr>
           <th scope="row">WD{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td>{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
@@ -79,7 +83,8 @@
       {% for player in XDplayers %}
         <tr>
           <th scope="row">XD{{ forloop.counter }}</th>
-          <td><a href="#">{{ player.name }}</a></td>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td>{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>

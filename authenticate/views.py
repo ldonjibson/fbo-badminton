@@ -99,9 +99,6 @@ def fantasy_player_ranking(request):
 	all_ranking = Ranking.objects.all()
 	return render(request, 'authenticate/fantasy_player_ranking.html', {'all_ranking': all_ranking })
 
-def player_profile(request, player):
-	profile = Ranking.objects.get(player=player)
-	return render(request, 'authenticate/player_profile.html', {'profile': profile })
 
 def news(request):
 	articles = Article.objects.all().order_by('date')
@@ -174,18 +171,19 @@ def check_team_for_slots(user, player):
 
 
 def my_team(request, message=False):
-    user = request.user
-    context = {}
-    user_team = Teams.objects.filter(owner=user).first()
-    context['MSplayers'] = MSPlayer.objects.filter(team=user_team)
-    context['WSplayers'] = WSPlayer.objects.filter(team=user_team)
-    context['WDplayers'] = WDPlayer.objects.filter(team=user_team)
-    context['MDplayers'] = MDPlayer.objects.filter(team=user_team)
-    context['XDplayers'] = XDPlayer.objects.filter(team=user_team)
-    context['team'] = user_team
-    if message:
-        messages.success(request, ("Successfully saved your team"))
-    return render(request, 'authenticate/my_team.html', context)
+	print(request.user.teams)
+	user = request.user
+	context = {}
+	user_team = Teams.objects.filter(owner=user).first()
+	context['MSplayers'] = MSPlayer.objects.filter(team=user_team)
+	context['WSplayers'] = WSPlayer.objects.filter(team=user_team)
+	context['WDplayers'] = WDPlayer.objects.filter(team=user_team)
+	context['MDplayers'] = MDPlayer.objects.filter(team=user_team)
+	context['XDplayers'] = XDPlayer.objects.filter(team=user_team)
+	context['team'] = user_team
+	if message:
+		messages.success(request, ("Successfully saved your team"))
+	return render(request, 'authenticate/my_team.html', context)
 
 
 def sell_player(request, player):
@@ -337,10 +335,19 @@ class LeagueDetailView(DetailView):
 		context = super().get_context_data(**kwargs)
 		members = []
 		for relation in self.object.users.all():
-			members.append(relation.user)
+			user = relation.user
+			team = Teams.objects.filter(owner=user).first()
+			members.append((user, team))
 		owner = self.object.owner
-		context['users'] = members + [owner, ]
+		owner_team = Teams.objects.filter(owner=owner).first()
+		context['users'] = members + [(owner, owner_team), ]
+		context['users'].sort(key=lambda x:x[1].get_team_total_points() if x[1] is not None else 0, reverse=True)
 		return context
+
+
+def player_profile(request, type, pk):
+	profile = get_player(type, pk)
+	return render(request, 'authenticate/player_profile.html', {'profile': profile})
 
 #attempt at api content for news page
 	#import requests
