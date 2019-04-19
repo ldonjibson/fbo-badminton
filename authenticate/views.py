@@ -291,7 +291,6 @@ class LeagueCreate(CreateView):
 class LeagueUpdate(UpdateView):
 	model = League
 	fields = ['name']
-	template_name_suffix = '_update_form'
 	success_url = reverse_lazy('my_team')
 
 

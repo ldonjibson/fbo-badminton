@@ -2,7 +2,12 @@
 {% load static %}
 {% block content %}
 {% for league in object_list %}
-    <li><a href="{% url 'league_detail' pk=league.pk %}">{{ league.name }}</a>{% if league.owner == request.user %} Invite key: {{league.invite_key }}{% endif %}</li>
+    <li><a href="{% url 'league_detail' pk=league.pk %}">{{ league.name }}</a>
+	    {% if league.owner == request.user %}
+		    Invite key: {{league.invite_key }}
+		    <a href="{% url 'update_league' pk=league.pk %}">Update</a>
+		    <a href="{% url 'delete_league' pk=league.pk %}">Delete</a>
+	    {% endif %}</li>
 {% empty %}
     <li>No leagues yet</li>
 {% endfor %}

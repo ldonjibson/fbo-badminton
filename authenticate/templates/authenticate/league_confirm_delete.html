@@ -1,0 +1,6 @@
+<form action="" method="post">
+    {% csrf_token %}
+    The following league will be deleted. Are you sure?
+    <input type="submit" class="btn btn-primary" value="Confirm deletion" name="confirm_delete" />
+    <button onclick="window.history.back();" class="btn btn-default" type="button">Cancel</button>
+</form>
