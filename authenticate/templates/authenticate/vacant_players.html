@@ -24,7 +24,7 @@
       {% for player in MSplayers_user %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">MS{{ forloop.counter }}</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td class="player-cost">{{ player.cost }}</td>
@@ -36,7 +36,7 @@
       {% for player in WSplayers_user %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">WS{{ forloop.counter }}</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td class="player-cost">{{ player.cost }}</td>
@@ -48,7 +48,7 @@
       {% for player in MDplayers_user %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">MD{{ forloop.counter }}</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td class="player-cost">{{ player.cost }}</td>
@@ -61,7 +61,7 @@
       {% for player in WDplayers_user %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">WD{{ forloop.counter }}</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td class="player-cost">{{ player.cost }}</td>
@@ -73,7 +73,7 @@
       {% for player in XDplayer_user %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">XD{{ forloop.counter }}</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td class="player-cost">{{ player.cost }}</td>
@@ -107,7 +107,7 @@
       {% for player in MSplayers %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">MS</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td class="player-cost">{{ player.cost }}</td>
@@ -128,7 +128,7 @@
       {% for player in WSplayers %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">WS</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
          <td class="player-cost">{{ player.cost }}</td>
@@ -149,7 +149,7 @@
       {% for player in MDplayers %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">MD</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td class="player-cost">{{ player.cost }}</td>
@@ -171,7 +171,7 @@
       {% for player in WDplayers %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">WD</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td class="player-cost">{{ player.cost }}</td>
@@ -192,7 +192,7 @@
       {% for player in XDplayers %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">XD</th>
-          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+          <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
           <td>{{ player.country }}</td>
           <td class="player-cost">{{ player.cost }}</td>
