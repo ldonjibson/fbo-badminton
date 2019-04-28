@@ -11,7 +11,7 @@ class Tournament(models.Model):
 
 class PlayerTournamentRecord(models.Model):
 	player = models.ForeignKey(Player, on_delete=models.CASCADE)
-	tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+	tournament = models.ManyToManyField(Tournament, on_delete=models.CASCADE)
 	score = models.IntegerField()
 
 	def __str__(self):
