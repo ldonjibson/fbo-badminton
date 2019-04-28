@@ -1,7 +1,7 @@
 {% extends 'authenticate/base.html' %}
 {% load static %}
 {% block content %}
-<form action="{% url 'join_league' %}" method="post">
+<form action="{% url 'main-urls:join_league' %}" method="post">
 	{% csrf_token %}
     <label for="key">Invite key: </label>
     <input id="key" type="text" name="key" value="">

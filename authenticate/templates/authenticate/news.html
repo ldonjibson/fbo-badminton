@@ -10,7 +10,7 @@
 <div class="media">
   <img src="{{ article.thumb.url }}" class="mr-3" style="width: 18rem;">
   <div class="media-body">
-    <h2 class="mt-0"><a href="{% url 'article_detail' slug=article.slug %}">{{ article.title }}</a></h2>
+    <h2 class="mt-0"><a href="{% url 'main-urls:article_detail' slug=article.slug %}">{{ article.title }}</a></h2>
     <p>{{ article.snippet }}</p>
     <small class="text-muted">{{ article.date }}</small>
   </div>

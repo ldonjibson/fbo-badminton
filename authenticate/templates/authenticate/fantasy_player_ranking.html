@@ -27,7 +27,7 @@
 
 	<tbody>
 		<tr>
-			<td><a href="{% url 'player_profile' player=things.player %}">{{ things.name }}</a></td>
+			<td><a href="{% url 'players-urls:player_profile' player=things.player %}">{{ things.name }}</a></td>
 			<td>{{ things.country }}</td>
 			<td>{{ things.event }}</td>
 			<td>{{ things.price }}</td>

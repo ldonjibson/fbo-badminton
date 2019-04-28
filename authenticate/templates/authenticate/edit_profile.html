@@ -6,7 +6,7 @@
 <h1 class="text-center">Edit Profile</h1>
 
 
-	<form method="POST" action="{% url 'edit_profile' %}">
+	<form method="POST" action="{% url 'main-urls:edit_profile' %}">
 		{% csrf_token %}
 
 		{% if form.errors %}
@@ -26,7 +26,7 @@
 
 			{{ form.as_p }}
 
-		<p><small><a href="{% url 'change_password' %}">Change Password</small></p>
+		<p><small><a href="{% url 'main-urls:change_password' %}">Change Password</small></p>
 		<input type="submit" value="Edit" class="btn btn-primary">
 	</form>
 

@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.db.models import Sum
 
-
 class Article(models.Model):
 	title = models.CharField(max_length=100)
 	slug = models.SlugField()
@@ -57,52 +56,6 @@ class ArchiveRecord(models.Model): # an archive record
 	score = models.IntegerField() # score
 
 
-class Ranking(models.Model):
-	rank = models.IntegerField(default=10)
-	name = models.CharField(max_length=50)
-	country = models.CharField(max_length=50)
-	cost = models.FloatField(default=10) # price is a number, defaults to 10. You can set it up in the admin panel
-	event = models.CharField(max_length=50)
-	score = models.IntegerField(default=0)
-	last = models.CharField(max_length=50)
-	form = models.CharField(max_length=50)
-	results = models.CharField(max_length=50)
-	status = models.CharField(max_length=50)
-	game8 = models.CharField(max_length=50)
-	match8 = models.CharField(max_length=50)
-	player = models.SlugField()
-	picture = models.ImageField(default='default.png', blank=True)
-	playing = models.BooleanField(default=True)
-	current_tournament_score = models.IntegerField(default=10)
-	last_tournament_score = models.IntegerField(default=10)
-
-	def __str__(self):
-		return str(self.rank) + ' ' + self.name
-
-	def get_type(self): # MS, WS, etc
-		return self.__class__.__name__[:2]
-
-#small subclasses for each type of player, they have all the methods from Ranking model, but also related to a team)
-
-class MSPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MSplayers', null=True, blank=True)  # connection to a team
-
-
-class WSPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WSplayers', null=True, blank=True)  # connection to a team
-
-
-class MDPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MDplayers', null=True, blank=True)  # connection to a team
-
-
-class WDPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WDplayers', null=True, blank=True)  # connection to a team
-
-
-class XDPlayer(Ranking):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='XDplayers', null=True, blank=True)  # connection to a team
-
 
 class League(models.Model):
 	name = models.CharField(max_length=50)
@@ -113,3 +66,6 @@ class League(models.Model):
 class UserLeagueParticipation(models.Model):
 	league = models.ForeignKey(League, related_name='users', on_delete=models.CASCADE)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='leagues', on_delete=models.CASCADE)
+
+
+# class Tournament(models.Model):

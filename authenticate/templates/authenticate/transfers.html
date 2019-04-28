@@ -23,7 +23,7 @@
     <div class="col-sm">
       <div class="card border-danger mb-3" style="width: 18rem;">
         <div class="card-header">
-          <a href="{% url 'my_team' %}">My team</a>
+          <a href="{% url 'players-urls:my_team' %}">My team</a>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><small><strong>MS:</strong> Chen Long & Lee Hyun Il</small></li>
@@ -82,28 +82,28 @@
             <th scope="col">Info</th>
           </tr>
       </thead>
-    {% for things in all_ranking %}
-      {% if things.playing %}
+    {% for player in all_ranking %}
+      {% if player.playing %}
       <tbody>
         <tr>
-          <td><a href="{% url 'player_profile' player=things.player %}">{{ things.name }}</a></td>
-          <td>{{ things.country }}</td>
-          <td>{{ things.event }}</td>
-          <td>{{ things.price }}</td>
-          <td>{{ things.score }}</td>
-          <td>{{ things.last }}</td>
-          <td>{{ things.form }}</td>
+          <td><a href="{% url 'players-urls:player_profile' type=player.get_type pk=player.pk %}">{{ player.name }}</a></td>
+          <td>{{ player.country }}</td>
+          <td>{{ player.event }}</td>
+          <td>{{ player.price }}</td>
+          <td>{{ player.score }}</td>
+          <td>{{ player.last }}</td>
+          <td>{{ player.form }}</td>
           <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">profile</button></td>
         </tr>
       {% else %}
         <tr class="table-danger">
-          <td><a href="{% url 'player_profile' player=things.player %}">{{ things.name }}</a></td>
-          <td>{{ things.country }}</td>
-          <td>{{ things.event }}</td>
-          <td>{{ things.price }}</td>
-          <td>{{ things.score }}</td>
-          <td>{{ things.last }}</td>
-          <td>{{ things.form }}</td>
+          <td><a href="{% url 'players-urls:player_profile' type=player.get_type pk=player.pk %}">{{ player.name }}</a></td>
+          <td>{{ player.country }}</td>
+          <td>{{ player.event }}</td>
+          <td>{{ player.price }}</td>
+          <td>{{ player.score }}</td>
+          <td>{{ player.last }}</td>
+          <td>{{ player.form }}</td>
           <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">profile</button></td>
         </tr>
       </tbody>

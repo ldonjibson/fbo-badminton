@@ -70,7 +70,7 @@
           <td><a class="btn btn-danger sell" role="button">Sell</a></td>
         </tr>
       {% endfor %}
-      {% for player in XDplayer_user %}
+      {% for player in XDplayers_user %}
         <tr class="{{ player.id }}">
           <th class="player-type" scope="row">XD{{ forloop.counter }}</th>
           <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
@@ -85,7 +85,7 @@
       </tbody>
     </table>
     </div>
-  <div class="row col-sm" ><form id="form" action="{% url 'buy_bulk' %}"
+  <div class="row col-sm" ><form id="form" action="{% url 'players-urls:buy_bulk' %}"
          method="POST">{% csrf_token %}<input type="submit" class="btn btn-danger" value="SUBMIT"></form></div>
 	<div class="row">
 	<div class="col-sm">
@@ -109,7 +109,7 @@
           <th class="player-type" scope="row">MS</th>
           <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
-          <td>{{ player.country }}</td>
+          <td><img class="flag-icon" src="{% static 'flags/4x3/' %}{{ player.country.code|lower }}.svg"></td>
           <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
@@ -130,7 +130,7 @@
           <th class="player-type" scope="row">WS</th>
           <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
-          <td>{{ player.country }}</td>
+          <td><img class="flag-icon" src="{% static 'flags/4x3/' %}{{ player.country.code|lower }}.svg"></td>
          <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
@@ -151,7 +151,7 @@
           <th class="player-type" scope="row">MD</th>
           <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
-          <td>{{ player.country }}</td>
+          <td><img class="flag-icon" src="{% static 'flags/4x3/' %}{{ player.country.code|lower }}.svg"></td>
           <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
@@ -173,7 +173,7 @@
           <th class="player-type" scope="row">WD</th>
           <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
-          <td>{{ player.country }}</td>
+          <td><img class="flag-icon" src="{% static 'flags/4x3/' %}{{ player.country.code|lower }}.svg"></td>
           <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>
@@ -194,7 +194,7 @@
           <th class="player-type" scope="row">XD</th>
           <td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
 	        {% include 'player.html' %}
-          <td>{{ player.country }}</td>
+          <td><img class="flag-icon" src="{% static 'flags/4x3/' %}{{ player.country.code|lower }}.svg"></td>
           <td class="player-cost">{{ player.cost }}</td>
           <td>{{ player.last_tournament_score }}</td>
           <td>{{ player.current_tournament_score }}</td>

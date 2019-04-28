@@ -19,7 +19,7 @@
 	{% for things in all_teams %}
 		<tbody>
 			<tr>
-			    <td><a href="{% url 'team_detail' team_pk=things.pk %}">{{ things.owner.username }}</a></td>
+			    <td><a href="{% url 'players-urls:team_detail' team_pk=things.pk %}">{{ things.owner.username }}</a></td>
 			    <td>{{ things.get_team_total_points }}</td>
 			</tr>
 		</tbody>

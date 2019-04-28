@@ -60,7 +60,7 @@
         <div class="card-body">
           <h5 class="card-title">Pick your squad</h5>
           <p class="card-text">Use your budget of 120 million to pick a squad of 15 players</p>
-          <a href="{% url 'register' %}" class="btn btn-primary">Play now</a>
+          <a href="{% url 'main-urls:register' %}" class="btn btn-primary">Play now</a>
         </div>
       </div>
     </div>
@@ -210,7 +210,7 @@
   <div class="card border-danger mb-3" style="width: 18rem;">
     <img src="{{ article.thumb.url }}" class="card-img-top" style="width: 18rem;">
     <div class="card-body">
-      <h5><a href="{% url 'article_detail' slug=article.slug %}" class="card-title">{{ article.title }}</a></h5>
+      <h5><a href="{% url 'main-urls:article_detail' slug=article.slug %}" class="card-title">{{ article.title }}</a></h5>
       <p class="card-text">{{ article.snippet }}</p>
     </div>
     <div class="card-footer">

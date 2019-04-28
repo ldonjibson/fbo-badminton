@@ -1,7 +1,8 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-
+{% load staticfiles %}
+{% load static %}
 
   <head>
     <!-- Required meta tags -->
@@ -25,7 +26,7 @@
 } );
     </script>
     <nav class="navbar navbar-expand-lg navbar-light bg-danger">
-  <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo.jpg' %}"/></a>
+  <a class="navbar-brand" href="{% url 'main-urls:home' %}"><img src="{% static 'images/logo.jpg' %}"/></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -35,18 +36,18 @@
 
       {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          <a class="nav-link" href="{% url 'main-urls:logout' %}">Logout</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'edit_profile' %}">Edit Profile</a>
+          <a class="nav-link" href="{% url 'main-urls:edit_profile' %}">Edit Profile</a>
         </li>
 
       {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Login</a>
+          <a class="nav-link" href="{% url 'main-urls:login' %}">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'register' %}">Register</a>
+          <a class="nav-link" href="{% url 'main-urls:register' %}">Register</a>
         </li>
       {% endif %}
 
@@ -57,29 +58,29 @@
           How to play
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'rules' %}">Rules</a>
+          <a class="dropdown-item" href="{% url 'main-urls:rules' %}">Rules</a>
           <a class="dropdown-item" href="#">Prizes</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'fantasy_player_ranking' %}">Fantasy Player Ranking</a>
+          <a class="dropdown-item" href="{% url 'main-urls:fantasy_player_ranking' %}">Fantasy Player Ranking</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'news' %}">Badminton News</a>
+        <a class="nav-link" href="{% url 'main-urls:news' %}">Badminton News</a>
       </li>
       {% if user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'my_team' %}">My Team</a>
+        <a class="nav-link" href="{% url 'players-urls:my_team' %}">My Team</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'buy_players' %}">Buy players</a>
+        <a class="nav-link" href="{% url 'players-urls:buy_players' %}">Buy players</a>
       </li>
       {% endif %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'transfers' %}">Pick your team</a>
+        <a class="nav-link" href="{% url 'main-urls:transfers' %}">Pick your team</a>
       </li>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
+        <a class="nav-link" href="{% url 'main-urls:leaderboard' %}">Leaderboard</a>
       </li
 
     </ul>

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from players.models import *
 
 admin.site.register(MSPlayer)
 admin.site.register(WDPlayer)

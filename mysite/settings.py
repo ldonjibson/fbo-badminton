@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authenticate',
     'django_filters',
+    'players',
+    'tournaments',
     
 ]
 

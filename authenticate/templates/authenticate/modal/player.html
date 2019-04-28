@@ -2,22 +2,65 @@
 <div class="modal-dialog">
 	<div class="modal-content">
 		<div class="modal-header">
-			{{ player.name }} - {{ player.get_type }}
+			<h5>{{ player.name }} - {{ player.get_type }}</h5>
 		</div>
-		<div class="modal-body">
-		Country: {{ player.country }}<br>
+		<div class="modal-body">{% load static %}
+		Country: {{ player.country.name }}&nbsp;<img class="flag-icon" src="{% static 'flags/4x3/' %}{{ player.country.code|lower }}.svg"><br>
 		Price: {{ player.cost }}<br>
-		{% if player.current_tournament_score %}
-			Current tournament score:
-			{{ player.current_tournament_score }}
-		{% else %}
-			Currently not in a tournament
-		{% endif %}
+		<img class="player-portrait" src="/media/{{ player.picture }}" alt="img">
 		</div>
 		<div class="modal-footer">
-			<a href="{% url 'player_profile' type=player.get_type pk=player.pk %}"><strong>See profile</strong></a></li>
+			<a href="{% url 'players-urls:player_profile' type=player.get_type pk=player.pk %}"><strong>See profile</strong></a></li>
 		</div>
-
+	<nav>
+	  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+	    <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab"  href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true">Profile</a>
+	    <a class="nav-item nav-link" id="nav-performance-tab" data-toggle="tab" href="#performance" role="tab" aria-controls="nav-performance" aria-selected="false">Performance</a>
+	  </div>
+	</nav>
+	<div class="tab-content" id="nav-tabContent">
+	  <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="nav-home-tab">
+		  <div class="col-sm-4">
+          <h6>Podiums</h6>
+          <h4>112</h4>
+        </div>
+	  </div>
+	  <div class="tab-pane fade" id="performance" role="tabpanel" aria-labelledby="nav-profile-tab">
+		<div class="col-sm-4">
+          <h6>Podiums</h6>
+          <h4>112</h4>
+        </div>
+	  </div>
+	</div>
 	</div>
 </div>
 </div>
+</div>
+</div>
+	<style>
+	.modal-dialog {
+
+          width: 720px;
+		  height: 480px;
+		  max-width: None;
+
+        }
+	.player-portrait {
+	    height: 125px;
+	    position: absolute;
+	    right: 40px;
+	    top: 10px;
+	}
+	.modal-body {
+	    height: 145px;
+	}
+	.flag-icon {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    display: inline-block;
+    width: 1.33333333em;
+    line-height: 1em;
+}
+	</style>
