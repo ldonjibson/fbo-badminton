@@ -62,10 +62,14 @@ class League(models.Model):
 	owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name='owned_leagues')
 	invite_key = models.CharField(max_length=32)
 
+	def __str__(self):
+		return self.name
 
 class UserLeagueParticipation(models.Model):
 	league = models.ForeignKey(League, related_name='users', on_delete=models.CASCADE)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='leagues', on_delete=models.CASCADE)
 
+	def __str__(self):
+		return self.league + ' ' + self.user
 
 # class Tournament(models.Model):
