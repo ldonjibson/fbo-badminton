@@ -37,18 +37,18 @@ def login_user(request):
 		if user is not None:
 			login(request, user)
 			messages.success(request, ('Logged in!'))
-			return redirect('home')
+			return redirect('main-urls:home')
 
 		else:
 			messages.success(request, ('Error. Please try again'))
-			return redirect('login')
+			return redirect('main-urls:login')
 	else:
 		return render(request, 'authenticate/login.html', {})
 
 def logout_user(request):
 	logout(request)
 	messages.success(request, ('Logged out!'))
-	return redirect('home')
+	return redirect('main-urls:home')
 
 def register_user(request):
 	if request.method == 'POST':
@@ -61,7 +61,7 @@ def register_user(request):
 			Teams.objects.create(owner=user)
 			login(request, user)
 			messages.success(request, ('Yay! You have registered'))
-			return redirect('home')
+			return redirect('main-urls:home')
 	else:
 		form = SignUpForm()
 
@@ -74,7 +74,7 @@ def edit_profile(request):
 		if form.is_valid():
 			form.save()
 			messages.success(request, ('Wohoo! You have successfully edited your profile'))
-			return redirect('home')
+			return redirect('main-urls:home')
 	else:
 		form = EditProfileForm(instance=request.user)
 
@@ -87,7 +87,7 @@ def change_password(request):
 		if form.is_valid():
 			form.save()
 			messages.success(request, ('Nice! You have successfully edited your password'))
-			return redirect('home')
+			return redirect('main-urls:home')
 	else:
 		form = PasswordChangeForm(user=request.user)
 
