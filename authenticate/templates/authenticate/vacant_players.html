@@ -262,7 +262,7 @@
 	form = $('form')[0];
 	formData = new FormData(form);
 	playerData = jQuery.parseJSON('{{data|safe}}');
-	console.log(playerData)
+
 
 	var checkTeamSpace = function(){
         for (var i = 0; i < buttonsVacant.length; i++) {
@@ -277,7 +277,7 @@
 		    } else {
                 buttonsVacant[i].addEventListener('click', handleCart, false);
                 rowButton.style.backgroundColor = "";
-                row.find('a')[1].innerHTML = 'buy';
+                row.find('a')[1].innerHTML = 'Buy';
             }
             if (rowButton.className==='btn btn-secondary'){
 		        rowButton.removeEventListener("click", handleCart, false);
@@ -295,6 +295,7 @@
 			cost = element.getElementsByClassName('player-cost')[0].innerHTML,
 			row = jQuery.extend(true, {}, $(this).closest('tr'));
 			let rowButton = row.find('a')[1];
+
 
 
 
@@ -378,7 +379,7 @@
 	for (var i = 0; i < buttonsYours.length; i++) {
 	    buttonsYours[i].addEventListener('click', handleCart, false);
 	}
-
+	checkTeamSpace();
 	</script>
 
 

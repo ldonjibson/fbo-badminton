@@ -1,9 +1,14 @@
 from django.db import models
+from django_countries.fields import CountryField
+
+from authenticate.models import League
 from players.models import Player
 
 class Tournament(models.Model):
 	date = models.TimeField()
 	title = models.CharField(max_length=255)
+	country = CountryField(blank_label='(select country)', default='GB')
+	league = models.ManyToManyField(League)
 
 	def __str__(self):
 		return self.title
@@ -11,7 +16,7 @@ class Tournament(models.Model):
 
 class PlayerTournamentRecord(models.Model):
 	player = models.ForeignKey(Player, on_delete=models.CASCADE)
-	tournament = models.ManyToManyField(Tournament, on_delete=models.CASCADE)
+	tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
 	score = models.IntegerField()
 
 	def __str__(self):
