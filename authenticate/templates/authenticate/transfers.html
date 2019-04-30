@@ -68,51 +68,36 @@
   </ul>
 </nav>
 
-  {% if all_ranking %}
-  <table id=player_table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Player</th>
-            <th scope="col">Country</th>
-            <th scope="col">Event</th>
-            <th scope="col">Price</th>
-            <th scope="col">Season Points</th>
-            <th scope="col">Last Tournament</th>
-            <th scope="col">Form</th>
-            <th scope="col">Info</th>
-          </tr>
-      </thead>
-    {% for player in all_ranking %}
-      {% if player.playing %}
-      <tbody>
-        <tr>
-          <td><a href="{% url 'players-urls:player_profile' type=player.get_type pk=player.pk %}">{{ player.name }}</a></td>
-          <td>{{ player.country }}</td>
-          <td>{{ player.event }}</td>
-          <td>{{ player.price }}</td>
-          <td>{{ player.score }}</td>
-          <td>{{ player.last }}</td>
-          <td>{{ player.form }}</td>
-          <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">profile</button></td>
-        </tr>
-      {% else %}
-        <tr class="table-danger">
-          <td><a href="{% url 'players-urls:player_profile' type=player.get_type pk=player.pk %}">{{ player.name }}</a></td>
-          <td>{{ player.country }}</td>
-          <td>{{ player.event }}</td>
-          <td>{{ player.price }}</td>
-          <td>{{ player.score }}</td>
-          <td>{{ player.last }}</td>
-          <td>{{ player.form }}</td>
-          <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">profile</button></td>
-        </tr>
-      </tbody>
-      {% endif %}
-    {% endfor %}
-  </table>
+  <table class="table table-hover" id="player_table">
+	<thead>
+		<tr>
+			<th scope="col">Player</th>
+			<th scope="col">Country</th>
+			<th scope="col">Team</th>
+			<th scope="col">Price</th>
+			<th scope="col">Season Points</th>
+			<th scope="col">Last Tournament</th>
+			<th scope="col">Form</th>
+			<th scope="col">Info</th>
+		</tr>
+	</thead>
+{% for player in all_ranking %}
 
-{% endif %}
-
+	<tbody>
+		<tr>
+			<td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'player.html' %}
+			<td>{{ player.country }}</td>
+			<td>{% if player.team.owner %}{{ player.team.owner }}{% else %}vacant{% endif %}</td>
+			<td>{{ player.price }}</td>
+			<td>{{ player.score }}</td>
+			<td>{{ player.last }}</td>
+			<td>{{ player.form }}</td>
+			<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">profile</button></td>
+		</tr>
+	</tbody>
+{% endfor %}
+</table>
 
 {% endblock %}
 
