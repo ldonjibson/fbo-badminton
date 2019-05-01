@@ -25,6 +25,11 @@ class Player(models.Model):
 	def get_type(self): # MS, WS, etc
 		return self.__class__.__name__[:2]
 
+	def get_profile_stats(self):
+		STATS = ['score', 'status', 'current_tournament_score', 'last_tournament_score', 'rank']
+		stats = [(stat.replace('_', ' ').title(), getattr(self, stat)) for stat in STATS]
+		return stats
+
 class MSPlayer(Player):
 	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MSplayers', null=True, blank=True)  # connection to a team
 
