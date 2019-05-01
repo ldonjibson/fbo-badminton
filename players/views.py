@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import *
 from .utils import *
 import json
 
 # Create your views here.
 
+@login_required
 def my_team(request, message=False):
-	print(request.user.teams)
 	user = request.user
 	context = {}
 	user_team = Teams.objects.filter(owner=user).first()
@@ -33,7 +34,7 @@ def team_detail(request, team_pk):
 	context['teampoints'] = team.get_team_total_points()
 	return render(request, 'authenticate/team_detail.html', context)
 
-
+@login_required
 def buy_players_index(request):
 	user_team = Teams.objects.filter(owner=request.user).first()
 	context = {}
@@ -57,7 +58,7 @@ def buy_players_index(request):
 	context['data'] = json.dumps(players_data_for_js)
 	return render(request, 'authenticate/vacant_players.html', context)
 
-
+@login_required
 def process_cart(request):
     user = request.user
     user_team = Teams.objects.filter(owner=user).first()

@@ -14,30 +14,46 @@
 		</div>
 	<nav>
 	  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-	    <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab"  href="#profile" role="tab" aria-controls="nav-profile" aria-selected="true">Profile</a>
-	    <a class="nav-item nav-link" id="nav-performance-tab" data-toggle="tab" href="#performance" role="tab" aria-controls="nav-performance" aria-selected="false">Performance</a>
+	    <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab"  href="#profile{{ player.get_type }}{{ player.id }}" role="tab" aria-controls="nav-profile" aria-selected="true">Profile</a>
+	    <a class="nav-item nav-link" id="nav-performance-tab" data-toggle="tab" href="#performance{{ player.get_type }}{{ player.id }}" role="tab" aria-controls="nav-performance" aria-selected="false">Performance</a>
 	  </div>
 	</nav>
 	<div class="tab-content" id="nav-tabContent">
-	  <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="nav-home-tab">
+	  <div class="tab-pane fade show active" id="profile{{ player.get_type }}{{ player.id }}" role="tabpanel" aria-labelledby="nav-home-tab">
 		  <div class="col-sm-4">
           <h6>Podiums</h6>
           <h4>112</h4>
         </div>
 	  </div>
-	  <div class="tab-pane fade" id="performance" role="tabpanel" aria-labelledby="nav-profile-tab">
-		<div class="col-sm-4">
-          <h6>Podiums</h6>
-          <h4>112</h4>
-        </div>
+	  <div class="tab-pane fade" id="performance{{ player.get_type }}{{ player.id }}" role="tabpanel" aria-labelledby="nav-profile-tab">
+		<div class="table">
+			<div class="table-head">
+				<div class="tr">
+					<span class="th">Tournament</span>
+					<span class="th">Score</span>
+					<span class="th">Game8</span>
+					<span class="th">Match8</span>
+					<span class="th">Bonus8</span>
+				</div>
+			</div>
+			<div class="table-body">
+			{% for participation in player.tournament_records.all %}
+				<div class="tr">
+					<div class="cell">{{ participation.tournament }}</div>
+					<div class="cell">{{ participation.score }}</div>
+					<div class="cell">{{ participation.game8 }}</div>
+					<div class="cell">{{ participation.match8 }}</div>
+					<div class="cell">{{ participation.bonus }}</div>
+				</div>
+			{% endfor %}
+			</div>
+		</div>
 	  </div>
 	</div>
 	</div>
 </div>
 </div>
-</div>
-</div>
-	<style>
+<style>
 	.modal-dialog {
 
           width: 720px;
@@ -63,4 +79,31 @@
     width: 1.33333333em;
     line-height: 1em;
 }
-	</style>
+.table {
+    display: table;
+}
+.tr {
+    display: table-row;
+}
+.table-head {
+	display: table-header-group;
+
+}
+.table-body {
+	display: table-row-group;
+
+}
+.cell {
+	display: table-cell;
+	vertical-align: inherit;
+
+	text-align: center;
+}
+.th {
+	display: table-cell;
+	vertical-align: inherit;
+	font-weight: bold;
+	text-align: center;
+
+}
+</style>

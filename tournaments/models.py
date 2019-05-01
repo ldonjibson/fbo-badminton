@@ -15,9 +15,12 @@ class Tournament(models.Model):
 
 
 class PlayerTournamentRecord(models.Model):
-	player = models.ForeignKey(Player, on_delete=models.CASCADE)
+	player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='tournament_records')
 	tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
 	score = models.IntegerField()
+	game8 = models.IntegerField()
+	match8 = models.IntegerField()
+	bonus = models.IntegerField()
 
 	def __str__(self):
 		return self.player.name + " in " + self.tournament.title
