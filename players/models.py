@@ -11,13 +11,16 @@ class Player(models.Model):
 
 	rank = models.IntegerField(default=10)
 	name = models.CharField(max_length=50)
-	country = CountryField(blank_label='(select country)', default='US')
-	cost = models.FloatField(default=10) # price is a number, defaults to 10. You can set it up in the admin panel
+	country = CountryField(blank_label='(select country)', default='CN')
+	cost = models.FloatField(default=3) # price is a number, defaults to 3. You can set it up in the admin panel
 	score = models.IntegerField(default=0)
+	form = models.IntegerField(default=0)
+	career_winrate = models.IntegerField(default=0)
+	year_winrate = models.IntegerField(default=0)
+	current_tournament_score = models.IntegerField(default=0)
+	last_tournament_score = models.IntegerField(default=0)
 	status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='1')
 	picture = models.ImageField(default='default.png', blank=True)
-	current_tournament_score = models.IntegerField(default=10)
-	last_tournament_score = models.IntegerField(default=10)
 
 	def __str__(self):
 		return self.name
