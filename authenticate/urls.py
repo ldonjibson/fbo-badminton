@@ -26,6 +26,7 @@ urlpatterns = [
 	path('my_team/join_league', views.join_league, name='join_league'),
 	path('my_team/league_list', views.LeagueList.as_view(), name='league_list'),
 	path('my_team/league_list/<pk>', views.LeagueDetailView.as_view(), name='league_detail'),
+	path('data_upload/', views.data_upload, name='data_upload'), #for easy data upload
 
 ]
 

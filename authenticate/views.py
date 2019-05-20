@@ -17,6 +17,7 @@ from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.db.models import Q
+import csv, io
 
 
 
@@ -200,6 +201,34 @@ class LeagueDetailView(DetailView):
 		context['users'] = members + [(owner, owner_team), ]
 		context['users'].sort(key=lambda x:x[1].get_team_total_points() if x[1] is not None else 0, reverse=True)
 		return context
+
+#for easy data upload
+def data_upload(request):
+	template = "data_upload.html"
+
+	if request.method == "GET":
+		return render(request, template)
+
+	csv_file = request.FILES['file']
+
+	if not csv_file.name.endswith('.csv'):
+		messages.error(request, 'This is not a csv file')
+
+	data_set = csv_file.read().decode('UTF-8')
+	io_string = io.StringIO(data_set)
+	next(io_string)
+	for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+		_, created = Data.objects.update_or_create(
+		name=column[0],
+		cost=column[1],
+		form=column[2],
+		career_winrate=column[3],
+		year_winrate=column[4]
+		)
+
+	context = {}
+	return render(request, template, context)
+
 
 
 

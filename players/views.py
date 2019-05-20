@@ -104,4 +104,3 @@ def process_cart(request):
 def player_profile(request, type, pk):
 	profile = get_player(type, pk)
 	return render(request, 'authenticate/player_profile.html', {'profile': profile})
-
