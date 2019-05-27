@@ -10,7 +10,7 @@ class Player(models.Model):
 			   ]
 
 	rank = models.IntegerField(default=10)
-	name = models.CharField(max_length=50)
+	name = models.CharField(max_length=50, default="Default name")
 	country = CountryField(blank_label='(select country)', default='US')
 	cost = models.FloatField(default=10) # price is a number, defaults to 10. You can set it up in the admin panel
 	score = models.IntegerField(default=0)

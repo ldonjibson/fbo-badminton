@@ -6,4 +6,6 @@
 *.pyo
 *.idea/
 badminton_env/
+db.sqlite3
+.gitignore
 

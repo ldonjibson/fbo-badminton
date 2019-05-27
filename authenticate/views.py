@@ -149,10 +149,6 @@ class LeagueUpdate(UpdateView):
 	success_url = reverse_lazy('players-urls:my_team')
 
 
-class LeagueDelete(DeleteView):
-    model = League
-    success_url = reverse_lazy('players-urls:my_team')
-
 
 def join_league(request):
 	if request.method == 'POST':
@@ -160,17 +156,27 @@ def join_league(request):
 		if form.is_valid():
 			user = request.user
 			key = request.POST['key']
-			league = League.objects.filter(invite_key=key)
-			if league:
-				UserLeagueParticipation.objects.create(user=user, league=league[0])
+			league = League.objects.filter(invite_key=key).first()
+			if league and not UserLeagueParticipation.objects.filter(user=user, league=league):
+				UserLeagueParticipation.objects.create(user=user, league=league)
 				messages.success(request, "Successfully joined league")
-				return HttpResponseRedirect('/my_team/')
+				return HttpResponseRedirect(reverse_lazy('players-urls:my_team'))
+			elif UserLeagueParticipation.objects.filter(user=user, league=league):
+				messages.success(request, "You are already a member of this league")
 			else:
 				messages.success(request, "League not found")
 	else:
 		form = KeyForm()
 
 	return render(request, 'authenticate/join_league.html', {'form': form})
+
+
+def leave_league(request, pk):
+	user = request.user
+	league = League.objects.get(pk=pk)
+	UserLeagueParticipation.objects.filter(user=user, league=league).delete()
+	return HttpResponseRedirect(reverse_lazy('players-urls:my_team'))
+
 
 
 class LeagueList(ListView):
@@ -202,6 +208,10 @@ class LeagueDetailView(DetailView):
 		return context
 
 
+def league_delete(request, pk):
+	league = League.objects.get(pk=pk)
+	league.delete()
+	return HttpResponseRedirect('main-urls:league_list')
 
 
 

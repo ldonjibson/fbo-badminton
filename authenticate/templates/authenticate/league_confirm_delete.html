@@ -1,6 +1,23 @@
-<form action="" method="post">
-    {% csrf_token %}
-    The following league will be deleted. Are you sure?
-    <input type="submit" class="btn btn-primary" value="Confirm deletion" name="confirm_delete" />
-    <button onclick="window.history.back();" class="btn btn-default" type="button">Cancel</button>
-</form>
+<div class="modal fade" id="leagueModal{{ league.pk }}">
+<div class="modal-dialog">
+	<div class="modal-content">
+
+		<div class="modal-header">
+	The following league will be deleted. Are you sure?
+		</div>
+		<div class="modal-body confirm-delete">{% load static %}
+
+		</div>
+	<div class="modal-footer">
+	<a class="btn btn-danger" href="{% url 'main-urls:delete_league' pk=league.pk %}">Delete</a>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+	</div>
+
+	</div>
+</div>
+</div>
+<style>
+.modal{
+   overflow: hidden !important;
+}
+</style>
