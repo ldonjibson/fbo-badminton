@@ -1,9 +1,11 @@
 from django.contrib import messages
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy
+from django.utils.crypto import get_random_string
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 
 from leagues.forms import KeyForm
@@ -55,7 +57,7 @@ def join_league(request):
 	else:
 		form = KeyForm()
 
-	return render(request, 'authenticate/../templates/leagues/league_join.html', {'form': form})
+	return render(request, 'leagues/league_join.html', {'form': form})
 
 
 def leave_league(request, pk):

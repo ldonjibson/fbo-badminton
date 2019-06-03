@@ -10,4 +10,5 @@ urlpatterns = [
     path('players/', include('players.urls', namespace='players-urls')),
     path('', include('users.urls', namespace='users-urls')),
     path('csv_upload/', views.upload_csv, name='upload-csv'),
+    path('leagues/', include('leagues.urls', namespace='league-urls'))
 ]
