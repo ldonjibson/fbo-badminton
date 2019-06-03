@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'django_filters',
     'players',
     'tournaments',
-    
+    'users',
+    'leagues',
+    'teams'
 ]
 
 MIDDLEWARE = [
@@ -61,8 +63,9 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, 'authenticate', 'templates'),
-                 os.path.join(PROJECT_ROOT, 'authenticate', 'templates', 'authenticate', 'modal')],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'authenticate', '../templates'),
+                 os.path.join(PROJECT_ROOT, 'authenticate', '../templates', 'authenticate',
+                              '../templates/players/modal')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -137,3 +140,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = '/login/'
+
+AUTH_USER_MODEL = 'users.CustomUser'

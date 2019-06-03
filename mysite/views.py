@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 import csv
+from pycountry_convert import country_name_to_country_alpha2
 from players.models import *
 
 from django.contrib.admin.views.decorators import staff_member_required
@@ -34,7 +35,7 @@ def upload_csv(request):
 
 
             for row in reader:
-                type = row.get('type')
+                type = row.get('type')[:2]
                 name = row.get('name')
                 if not type or not name:
                     continue # skip if no type or name in the CSV row
@@ -46,7 +47,7 @@ def upload_csv(request):
                 # we don't create a new team if it doesn't exist(discussable)
                 team_name = row.get('team')
                 if team_name:
-                    team = Teams.objects.filter(name=team_name).first()
+                    team = Team.objects.filter(name=team_name).first()
                     if team:
                         player.team_id = team.id
 
@@ -56,6 +57,12 @@ def upload_csv(request):
                     csv_attribute_value = row.get(attribute)
                     if csv_attribute_value: # skip if no attribute in CSV row
                         setattr(player, attribute, csv_attribute_value) # set attribute for player
+                if len(player.country) != 2:
+                    try:
+                        player.country = country_name_to_country_alpha2(player.country, cn_name_format="default")
+                    except KeyError:
+                        print("Invalid Country Name, setting to default. You may change the country in CSV and upload "
+                              "the file again. It'll update the country name.")
                 player.save()
                 print(player)
 

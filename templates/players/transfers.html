@@ -1,0 +1,186 @@
+{% extends 'authenticate/../base.html' %}
+{% load static %}
+{% block head %}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+<h1>Pick your team</h1><br/>
+
+{% if user.is_authenticated %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+        <div class="card-header">
+          Hello {{ user.first_name }} {{ user.last_name }}!
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Username:</strong> {{ user.username }}</li>
+          <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+        <div class="card-header">
+          <a href="{% url 'players-urls:my_team' %}">My team</a>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><small><strong>MS:</strong> Chen Long & Lee Hyun Il</small></li>
+          <li class="list-group-item"><small><strong>WS:</strong> He Bingjiao & Akane Yamaguchi</small></li>
+          <li class="list-group-item"><small><strong>MD:</strong> Liu Yuchen & Lee Yong Dae</small></li>
+          <li class="list-group-item"><small><strong>WD:</strong> Yuki Fukushima & Gabriella Stoeva</small></li>
+          <li class="list-group-item"><small><strong>XD:</strong> Lu Kai & Christinna Pedersen</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+  <div class="card-header">
+    TEAM NAME
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><strong>Overall points:</strong> 1,234</br><strong>Global rank:</strong> 101</br><strong>Total players:</strong> 100,500</li>
+    <li class="list-group-item"><strong>Current tournament points:</strong> 69</li>
+    <li class="list-group-item"><a href="#"><strong>Your leagues</strong></a></li>
+  </ul>
+</div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+</br>
+<div class="row">
+<div class="col-md-4">
+<nav aria-label="...">
+  <ul class="pagination pagination-lg">
+	<li class="page-item active playerNavTab" player-type="MS"><a class="page-link">MS</a></li>
+    <li class="page-item playerNavTab" player-type="WS"><a class="page-link">WS</a></li>
+    <li class="page-item playerNavTab" player-type="MD"><a class="page-link">MD</a></li>
+    <li class="page-item playerNavTab" player-type="WD"><a class="page-link">WD</a></li>
+    <li class="page-item playerNavTab" player-type="XD"><a class="page-link">XD</a></li>
+  </ul>
+</nav>
+</div>
+<div class="col-md-4">
+<label for="sel1">Players per page:</label>
+<select class="form-control" id="sel1">
+<option class="playerNavTab">10</option>
+<option class="playerNavTab">25</option>
+<option class="playerNavTab">50</option>
+<option class="playerNavTab">100</option>
+</select>
+</div>
+</div>
+
+
+<table class="table table-hover" id="player_table">
+	<thead>
+		<tr>
+			<th scope="col">Player</th>
+			<th scope="col">Country</th>
+			<th scope="col">Team</th>
+			<th scope="col">Price</th>
+			<th scope="col">Season Points</th>
+			<th scope="col">Last Tournament</th>
+			<th scope="col">Form</th>
+			<th scope="col">Info</th>
+		</tr>
+	</thead>
+<tbody class="table-body-players">
+{% for player in players %}
+		<tr>
+			<td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal">{{ player.name }}</a></td>
+			<td>{{ player.country }}</td>
+			<td>{% if player.team.owner %}{{ player.team.owner }}{% else %}vacant{% endif %}</td>
+			<td>{{ player.price }}</td>
+			<td>{{ player.score }}</td>
+			<td>{{ player.last }}</td>
+			<td>{{ player.form }}</td>
+			<td><button type="button" class="btn btn-primary mod" player-type="{{ player.get_type }}" player-id="{{ player.id }}" data-toggle="modal" data-target="#playerModal">profile</button></td>
+		</tr>
+{% endfor %}
+</tbody>
+</table>
+{% with players|first as player %}
+<div class="modal fade" id="playerModal">
+<div class="modal-dialog">
+	<div class="modal-content">
+	{% include 'players/modal/player.html' %}
+	</div>
+</div>
+</div>
+{% endwith %}
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if players.has_previous %}
+        <li class="page-item playerNavTab"><a class="page-link">Previous</a></li>
+	{% endif %}
+	{% for i in players.paginator.page_range %}
+      {% if players.number == i %}
+	      <li class="page-item playerNavTab active"><a class="page-link active">{{ i }}</a></li>
+      {% else %}
+        <li class="page-item playerNavTab"><a class="page-link">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+	{% if players.has_next %}
+    <li class="page-item playerNavTab"><a class="page-link">Next</a></li>
+	{% endif %}
+  </ul>
+</nav>
+
+{% block js %}
+	<script>
+		$(document).ready(function(){
+		    $('.playerNavTab').on('click', function(){
+				var type = $('.page-item.playerNavTab.active').attr('player-type');
+				var table = $('.table-body-players');
+				$('.playerNavTab.active').removeClass('active');
+                $(this).addClass('active');
+
+			    req = $.ajax({
+				    url : '/players/api/players-update',
+				    type : 'GET',
+				    cache: false,
+				    data : { type : type}
+			    });
+
+			    req.done(function(data){
+				    table.html(data);
+			    });
+
+
+		    });
+
+		    $(document).on('click', '.btn.btn-primary.mod', function(){
+		        var modal = $('.modal-content');
+		        var type = $(this).attr('player-type');
+		        var id = $(this).attr('player-id');
+
+				 req = $.ajax({
+				    url : '/players/api/player-update',
+				    type : 'GET',
+				    cache: false,
+				    data : { type : type, id : id}
+			    });
+
+			    req.done(function(data){
+				    modal.html(data);
+			    });
+            });
+
+
+		});
+
+
+	</script>
+
+{% endblock %}
+
+{% endblock %}
+

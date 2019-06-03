@@ -1,0 +1,52 @@
+.modal-dialog {
+
+      width: 720px;
+      height: 480px;
+      max-width: None;
+
+    }
+.player-portrait {
+    height: 125px;
+    position: absolute;
+    right: 40px;
+    top: 10px;
+}
+.modal-body {
+    height: 145px;
+}
+.flag-icon {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    display: inline-block;
+    width: 1.33333333em;
+    line-height: 1em;
+}
+.table {
+    display: table;
+}
+.tr {
+    display: table-row;
+}
+.table-head {
+	display: table-header-group;
+
+}
+.table-body {
+	display: table-row-group;
+
+}
+.cell {
+	display: table-cell;
+	vertical-align: inherit;
+
+	text-align: center;
+}
+.th {
+	display: table-cell;
+	vertical-align: inherit;
+	font-weight: bold;
+	text-align: center;
+
+}

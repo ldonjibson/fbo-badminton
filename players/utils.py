@@ -2,12 +2,12 @@ from .models import *
 
 
 def get_all_players():
-	all = 0
-	for player_type in Player.__subclasses__():
-		if not all:
-			all = player_type.objects.all()
-		all = all.union(player_type.objects.all())
-	return all
+    all = 0
+    for player_type in Player.__subclasses__():
+        if not all:
+            all = player_type.objects.all()
+        all = all.union(player_type.objects.all())
+    return all
 
 def get_player(player_type, player_pk):
     if player_type == 'MS':
@@ -24,7 +24,7 @@ def get_player(player_type, player_pk):
 
 def check_team_for_slots(user, player):
     player_type = player.get_type()
-    user_team = Teams.objects.filter(owner = user).first()
+    user_team = Team.objects.filter(owner = user).first()
     if player_type == 'MS':
         if len(user_team.MSplayers.all()) < 2:
             return False
@@ -54,16 +54,16 @@ def check_team_for_slots(user, player):
 
 def sell_player(request, player):
     user = request.user
-    user_team = Teams.objects.filter(owner = user).first()
+    user_team = Team.objects.filter(owner = user).first()
     user_team.budget += player.cost
     user_team.save()
     player.team = None
     player.save()
 
 def buy_player(request, player):
-	user = request.user
-	user_team = Teams.objects.filter(owner=user).first()
-	user_team.budget -= player.cost
-	user_team.save()
-	player.team = user_team
-	player.save()
+    user = request.user
+    user_team = Team.objects.filter(owner=user).first()
+    user_team.budget -= player.cost
+    user_team.save()
+    player.team = user_team
+    player.save()

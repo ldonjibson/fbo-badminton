@@ -1,0 +1,228 @@
+{% extends 'authenticate/../base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+        <div class="card-header">
+          Hello {{ user.first_name }} {{ user.last_name }}!
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Username:</strong> {{ user.username }}</li>
+          <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+        <div class="card-header">
+          <a href="#">Your team!</a>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><small><strong>MS:</strong> Chen Long & Lee Hyun Il</small></li>
+          <li class="list-group-item"><small><strong>WS:</strong> He Bingjiao & Akane Yamaguchi</small></li>
+          <li class="list-group-item"><small><strong>MD:</strong> Liu Yuchen & Lee Yong Dae</small></li>
+          <li class="list-group-item"><small><strong>WD:</strong> Yuki Fukushima & Gabriella Stoeva</small></li>
+          <li class="list-group-item"><small><strong>XD:</strong> Lu Kai & Christinna Pedersen</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+  <div class="card-header">
+    TEAM NAME
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><strong>Overall points:</strong> 1,234</br><strong>Global rank:</strong> 101</br><strong>Total players:</strong> 100,500</li>
+    <li class="list-group-item"><strong>Current tournament points:</strong> 69</li>
+    <li class="list-group-item"><a href="#"><strong>Your leagues</strong></a></li>
+  </ul>
+</div>
+    </div>
+  </div>
+</div>
+
+	
+{% endif %}
+
+<br/>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+        <img src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Pick your squad</h5>
+          <p class="card-text">Use your budget of 120 million to pick a squad of 15 players</p>
+          <a href="{% url 'users-urls:register' %}" class="btn btn-primary">Play now</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+        <img src="{% static 'images/c3.jpg' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Be the best in the world</h5>
+          <p class="card-text">Win big prizes</p>
+          <a href="#" class="btn btn-primary">Let's go</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+        <img src="{% static 'images/c4.jpg' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Something else</h5>
+          <p class="card-text">whooooop</p>
+          <a href="#" class="btn btn-primary">Click here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</br>
+
+<div class="col-sm">
+      <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Tournament</th>
+            <th scope="col">Month</th>
+            <th scope="col">Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Location</th>
+        </tr>
+    </thead>
+      <tbody>
+        <tr>
+          <td>ALL ENGLAND OPEN</td>
+          <td>March</td>
+          <td>06-10</td>
+          <td>BWF Tour 1000</td>
+          <td>Birmingham, UK</td>
+        </tr>
+        <tr>
+          <td>INDIA OPEN</td>
+          <td>March</td>
+          <td>26-31</td>
+          <td>BWF Tour 500</td>
+          <td>New Delhi, India</td>
+        </tr>
+        <tr>
+          <td>MALAYSIA OPEN</td>
+          <td>April</td>
+          <td>02-07</td>
+          <td>BWF Tour 750</td>
+          <td>Kuala Lumpur</td>
+        </tr>
+        <tr>
+          <td>SINGAPORE OPEN</td>
+          <td>April</td>
+          <td>09-14</td>
+          <td>BWF Tour 500</td>
+          <td>Singapore</td>
+        </tr>
+        <tr>
+          <td>INDONESIA OPEN</td>
+          <td>July</td>
+          <td>16-21</td>
+          <td>BWF Tour 1000</td>
+          <td>Jakarta, Indonesia</td>
+        </tr>
+       <tr>
+          <td>JAPAN OPEN</td>
+          <td>July</td>
+          <td>23-28</td>
+          <td>BWF Tour 750</td>
+          <td>Tokyo, Japan</td>
+        </tr>
+        <tr>
+          <td>THAILAND OPEN</td>
+          <td>July/August</td>
+          <td>06-10</td>
+          <td>BWF Tour 500</td>
+          <td>Bangkok, Thailand</td>
+        </tr>
+        <tr>
+          <td>WORLD CHAMPIONSHIPS</td>
+          <td>August</td>
+          <td>19-25</td>
+          <td>***</td>
+          <td>Basel, Switzerland</td>
+        </tr>
+        <tr>
+          <td>CHINA OPEN</td>
+          <td>September</td>
+          <td>17-22</td>
+          <td>BWF Tour 1000</td>
+          <td>Changzhou, China</td>
+        </tr>
+        <tr>
+          <td>KOREA OPEN</td>
+          <td>September</td>
+          <td>24-29</td>
+          <td>BWF Tour 500</td>
+          <td>Seoul, South Korea</td>
+        </tr>
+        <tr>
+          <td>DENMARK OPEN</td>
+          <td>October</td>
+          <td>15-20</td>
+          <td>BWF Tour 750</td>
+          <td>Odense, Denmark</td>
+        </tr>
+        <tr>
+          <td>FRENCH OPEN</td>
+          <td>October</td>
+          <td>22-27</td>
+          <td>BWF Tour 750</td>
+          <td>Paris, France</td>
+        </tr>
+        <tr>
+          <td>FUZHOU CHINA OPEN</td>
+          <td>November</td>
+          <td>05-10</td>
+          <td>BWF Tour 750</td>
+          <td>Fuzhou, China</td>
+        </tr>
+        <tr>
+          <td>HONG KONG OPEN</td>
+          <td>November</td>
+          <td>12-17</td>
+          <td>BWF Tour 500</td>
+          <td>Hong Kong</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</br>
+
+{% for article in articles%}
+
+<div class="card-deck">
+  <div class="card border-danger mb-3" style="width: 18rem;">
+    <img src="{{ article.thumb.url }}" class="card-img-top" style="width: 18rem;">
+    <div class="card-body">
+      <h5><a href="{% url 'main-urls:article_detail' slug=article.slug %}" class="card-title">{{ article.title }}</a></h5>
+      <p class="card-text">{{ article.snippet }}</p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">{{ article.date }}</small>
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+
+
+
+
+{% endblock %}
+

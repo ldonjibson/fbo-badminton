@@ -1,6 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
-from authenticate.models import Teams
+
+from teams.models import Team
 
 
 class Player(models.Model):
@@ -34,20 +35,20 @@ class Player(models.Model):
 		return stats
 
 class MSPlayer(Player):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MSplayers', null=True, blank=True)  # connection to a team
+	team = models.ManyToManyField(Team, related_name='MSplayers', blank=True)  # connection to a team
 
 
 class WSPlayer(Player):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WSplayers', null=True, blank=True)  # connection to a team
+	team = models.ManyToManyField(Team, related_name='WSplayers', blank=True)  # connection to a team
 
 
 class MDPlayer(Player):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='MDplayers', null=True, blank=True)  # connection to a team
+	team = models.ManyToManyField(Team, related_name='MDplayers', blank=True)  # connection to a team
 
 
 class WDPlayer(Player):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='WDplayers', null=True, blank=True)  # connection to a team
+	team = models.ManyToManyField(Team, related_name='WDplayers', blank=True)  # connection to a team
 
 
 class XDPlayer(Player):
-	team = models.ForeignKey(Teams, on_delete=models.CASCADE, related_name='XDplayers', null=True, blank=True)  # connection to a team
+	team = models.ManyToManyField(Team, related_name='XDplayers', blank=True)  # connection to a team

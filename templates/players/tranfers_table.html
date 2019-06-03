@@ -1,0 +1,12 @@
+{% for player in players %}
+		<tr>
+			<td><a class="player-name" href="" data-toggle="modal" data-target="#playerModal">{{ player.name }}</a></td>
+			<td>{{ player.country }}</td>
+			<td>{% if player.team.owner %}{{ player.team.owner }}{% else %}vacant{% endif %}</td>
+			<td>{{ player.price }}</td>
+			<td>{{ player.score }}</td>
+			<td>{{ player.last }}</td>
+			<td>{{ player.form }}</td>
+			<td><button type="button" class="btn btn-primary mod" player-type="{{ player.get_type }}" player-id="{{ player.id }}" data-toggle="modal" data-target="#playerModal">profile</button></td>
+		</tr>
+{% endfor %}

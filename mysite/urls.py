@@ -7,7 +7,7 @@ from authenticate.urls import urlpatterns as main_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authenticate.urls', namespace='main-urls')),
-    path('credit/', include('players.urls', namespace='players-urls')),
+    path('players/', include('players.urls', namespace='players-urls')),
+    path('', include('users.urls', namespace='users-urls')),
     path('csv_upload/', views.upload_csv, name='upload-csv'),
-      
 ]

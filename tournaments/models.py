@@ -1,7 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
 
-from authenticate.models import League
+from leagues.models import League
 from players.models import Player
 
 class Tournament(models.Model):

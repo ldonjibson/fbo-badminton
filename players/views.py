@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -9,59 +10,59 @@ import json
 
 @login_required
 def my_team(request, message=False):
-	user = request.user
-	context = {}
-	user_team = Teams.objects.filter(owner=user).first()
-	context['MSplayers'] = MSPlayer.objects.filter(team=user_team)
-	context['WSplayers'] = WSPlayer.objects.filter(team=user_team)
-	context['WDplayers'] = WDPlayer.objects.filter(team=user_team)
-	context['MDplayers'] = MDPlayer.objects.filter(team=user_team)
-	context['XDplayers'] = XDPlayer.objects.filter(team=user_team)
-	context['team'] = user_team
-	if message:
-		messages.success(request, ("Successfully saved your team"))
-	return render(request, 'authenticate/my_team.html', context)
+    user = request.user
+    context = {}
+    user_team = Team.objects.filter(owner=user).first()
+    context['MSplayers'] = MSPlayer.objects.filter(team=user_team)
+    context['WSplayers'] = WSPlayer.objects.filter(team=user_team)
+    context['WDplayers'] = WDPlayer.objects.filter(team=user_team)
+    context['MDplayers'] = MDPlayer.objects.filter(team=user_team)
+    context['XDplayers'] = XDPlayer.objects.filter(team=user_team)
+    context['team'] = user_team
+    if message:
+        messages.success(request, ("Successfully saved your team"))
+    return render(request, 'authenticate/my_team.html', context)
 
 
 def team_detail(request, team_pk):
-	context = {}
-	team = Teams.objects.get(pk=team_pk)
-	context['MSplayers'] = MSPlayer.objects.filter(team=team)
-	context['WSplayers'] = WSPlayer.objects.filter(team=team)
-	context['WDplayers'] = WDPlayer.objects.filter(team=team)
-	context['MDplayers'] = MDPlayer.objects.filter(team=team)
-	context['XDplayers'] = XDPlayer.objects.filter(team=team)
-	context['teampoints'] = team.get_team_total_points()
-	return render(request, 'authenticate/team_detail.html', context)
+    context = {}
+    team = Team.objects.get(pk=team_pk)
+    context['MSplayers'] = MSPlayer.objects.filter(team=team)
+    context['WSplayers'] = WSPlayer.objects.filter(team=team)
+    context['WDplayers'] = WDPlayer.objects.filter(team=team)
+    context['MDplayers'] = MDPlayer.objects.filter(team=team)
+    context['XDplayers'] = XDPlayer.objects.filter(team=team)
+    context['teampoints'] = team.get_team_total_points()
+    return render(request, 'authenticate/team_detail.html', context)
 
 @login_required
 def buy_players_index(request):
-	user_team = Teams.objects.filter(owner=request.user).first()
-	context = {}
-	context['MSplayers_user'] = MSPlayer.objects.filter(team=user_team)
-	context['WSplayers_user'] = WSPlayer.objects.filter(team=user_team)
-	context['WDplayers_user'] = WDPlayer.objects.filter(team=user_team)
-	context['MDplayers_user'] = MDPlayer.objects.filter(team=user_team)
-	context['XDplayers_user'] = XDPlayer.objects.filter(team=user_team)
-	context['MSplayers'] = list(MSPlayer.objects.all())
-	context['WSplayers'] = list(WSPlayer.objects.all())
-	context['WDplayers'] = list(WDPlayer.objects.all())
-	context['MDplayers'] = list(MDPlayer.objects.all())
-	context['XDplayers'] = list(XDPlayer.objects.all())
-	context['team'] = user_team
-	players_data_for_js = {}
-	players_data_for_js['MS'] = len(MSPlayer.objects.filter(team=user_team))
-	players_data_for_js['WS'] = len(WSPlayer.objects.filter(team=user_team))
-	players_data_for_js['WD'] = len(WDPlayer.objects.filter(team=user_team))
-	players_data_for_js['MD'] = len(MDPlayer.objects.filter(team=user_team))
-	players_data_for_js['XD'] = len(XDPlayer.objects.filter(team=user_team))
-	context['data'] = json.dumps(players_data_for_js)
-	return render(request, 'authenticate/vacant_players.html', context)
+    user_team = Team.objects.filter(owner=request.user).first()
+    context = {}
+    context['MSplayers_user'] = MSPlayer.objects.filter(team=user_team)
+    context['WSplayers_user'] = WSPlayer.objects.filter(team=user_team)
+    context['WDplayers_user'] = WDPlayer.objects.filter(team=user_team)
+    context['MDplayers_user'] = MDPlayer.objects.filter(team=user_team)
+    context['XDplayers_user'] = XDPlayer.objects.filter(team=user_team)
+    context['MSplayers'] = list(MSPlayer.objects.all())
+    context['WSplayers'] = list(WSPlayer.objects.all())
+    context['WDplayers'] = list(WDPlayer.objects.all())
+    context['MDplayers'] = list(MDPlayer.objects.all())
+    context['XDplayers'] = list(XDPlayer.objects.all())
+    context['team'] = user_team
+    players_data_for_js = {}
+    players_data_for_js['MS'] = len(MSPlayer.objects.filter(team=user_team))
+    players_data_for_js['WS'] = len(WSPlayer.objects.filter(team=user_team))
+    players_data_for_js['WD'] = len(WDPlayer.objects.filter(team=user_team))
+    players_data_for_js['MD'] = len(MDPlayer.objects.filter(team=user_team))
+    players_data_for_js['XD'] = len(XDPlayer.objects.filter(team=user_team))
+    context['data'] = json.dumps(players_data_for_js)
+    return render(request, 'players/vacant_players.html', context)
 
 @login_required
 def process_cart(request):
     user = request.user
-    user_team = Teams.objects.filter(owner=user).first()
+    user_team = Team.objects.filter(owner=user).first()
     players_to_sell = json.loads(request.POST.get('sell'))
     players_to_buy = json.loads(request.POST.get('buy'))
     print(players_to_sell, players_to_buy)
@@ -102,5 +103,15 @@ def process_cart(request):
 
 
 def player_profile(request, type, pk):
-	profile = get_player(type, pk)
-	return render(request, 'authenticate/player_profile.html', {'profile': profile})
+    profile = get_player(type, pk)
+    return render(request, 'players/player_profile.html', {'profile': profile})
+
+
+
+def transfers(request):
+    players = MSPlayer.objects.all()
+    posts_per_page = 10
+    page = 1
+    paginator = Paginator(players, posts_per_page)
+    players = paginator.get_page(page)
+    return render(request, 'players/transfers.html', {'players': players})

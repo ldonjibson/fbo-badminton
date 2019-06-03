@@ -1,0 +1,256 @@
+{% extends 'authenticate/../base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Your team</h1>
+
+<div class="card-deck">
+  <div class="card border-danger mb-3">
+    <div class="card-body">
+      <h5>Next tournament: ALL ENGLAND OPEN (06/03/2019-10/03/2019)</h5>
+      <p>Team submission deadline: 05/03/2019 11.59pm UK time :)</p>
+    </div>
+  </div>
+</div>
+
+{% if user.is_authenticated %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Event</th>
+            <th scope="col">Player</th>
+            <th scope="col">Country</th>
+            <th scope="col">Price(£)</th>
+            <th scope="col">Last Tournament</th>
+            <th scope="col">Current Tournament</th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for player in MSplayers %}
+        <tr>
+          <th scope="row">MS{{ forloop.counter }}</th>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'players/modal/player.html' %}
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+
+        </tr>
+      {% endfor %}
+      {% for player in WSplayers %}
+        <tr>
+          <th scope="row">WS{{ forloop.counter }}</th>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'players/modal/player.html' %}
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+
+        </tr>
+      {% endfor %}
+      {% for player in MDplayers %}
+        <tr>
+          <th scope="row">MD{{ forloop.counter }}</th>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'players/modal/player.html' %}
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+
+
+        </tr>
+      {% endfor %}
+      {% for player in WDplayers %}
+        <tr>
+          <th scope="row">WD{{ forloop.counter }}</th>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'players/modal/player.html' %}
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+
+        </tr>
+      {% endfor %}
+      {% for player in XDplayers %}
+        <tr>
+          <th scope="row">XD{{ forloop.counter }}</th>
+          <td><a href="" data-toggle="modal" data-target="#playerModal{{ player.get_type }}{{ player.id }}">{{ player.name }}</a></td>
+	        {% include 'players/modal/player.html' %}
+          <td>{{ player.country }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.last_tournament_score }}</td>
+          <td>{{ player.current_tournament_score }}</td>
+
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div> 
+
+    <div class="col-sm..offset-md-4">
+      <div class="card border-danger mb-3" style="width: 18rem;">
+        <div class="card-header">
+        TEAM NAME
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Overall points:</strong> {{ team.get_total_team_points }}<br><strong>Global rank:</strong> 101</br><strong>Total players:</strong> 100,500</li>
+          <li class="list-group-item"><strong>Current tournament points:</strong> 69</li>
+          <li class="list-group-item"><a href="{% url 'main-urls:join_league' %}"><strong>Join a league</strong></a></li>
+          <li class="list-group-item"><a href="{% url 'main-urls:create_league' %}"><strong>Create a league</strong></a></li>
+          <li class="list-group-item"><a href="{% url 'main-urls:league_list' %}"><strong>Your leagues</strong></a></li>
+        </ul>
+      </div>
+      <div class="container border-danger">
+        <div class="row">
+          <div class="col-sm.offset-md-4">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th scope="row">BUDGET (£)</th>
+                <td>{{ team.budget }}</td>
+              </tr>
+              <tr>
+                <th scope="row">TEAM VALUE (£)</th>
+                <td>{{ team.get_team_value }}</td>
+              </tr> 
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+            
+</br>
+
+
+{% endif %}
+
+</br>
+
+<div class="col-sm">
+      <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Tournament</th>
+            <th scope="col">Month</th>
+            <th scope="col">Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Location</th>
+        </tr>
+    </thead>
+      <tbody>
+        <tr>
+          <td>ALL ENGLAND OPEN</td>
+          <td>March</td>
+          <td>06-10</td>
+          <td>BWF Tour 1000</td>
+          <td>Birmingham, UK</td>
+        </tr>
+        <tr>
+          <td>INDIA OPEN</td>
+          <td>March</td>
+          <td>26-31</td>
+          <td>BWF Tour 500</td>
+          <td>New Delhi, India</td>
+        </tr>
+        <tr>
+          <td>MALAYSIA OPEN</td>
+          <td>April</td>
+          <td>02-07</td>
+          <td>BWF Tour 750</td>
+          <td>Kuala Lumpur</td>
+        </tr>
+        <tr>
+          <td>SINGAPORE OPEN</td>
+          <td>April</td>
+          <td>09-14</td>
+          <td>BWF Tour 500</td>
+          <td>Singapore</td>
+        </tr>
+        <tr>
+          <td>INDONESIA OPEN</td>
+          <td>July</td>
+          <td>16-21</td>
+          <td>BWF Tour 1000</td>
+          <td>Jakarta, Indonesia</td>
+        </tr>
+       <tr>
+          <td>JAPAN OPEN</td>
+          <td>July</td>
+          <td>23-28</td>
+          <td>BWF Tour 750</td>
+          <td>Tokyo, Japan</td>
+        </tr>
+        <tr>
+          <td>THAILAND OPEN</td>
+          <td>July/August</td>
+          <td>06-10</td>
+          <td>BWF Tour 500</td>
+          <td>Bangkok, Thailand</td>
+        </tr>
+        <tr>
+          <td>WORLD CHAMPIONSHIPS</td>
+          <td>August</td>
+          <td>19-25</td>
+          <td>***</td>
+          <td>Basel, Switzerland</td>
+        </tr>
+        <tr>
+          <td>CHINA OPEN</td>
+          <td>September</td>
+          <td>17-22</td>
+          <td>BWF Tour 1000</td>
+          <td>Changzhou, China</td>
+        </tr>
+        <tr>
+          <td>KOREA OPEN</td>
+          <td>September</td>
+          <td>24-29</td>
+          <td>BWF Tour 500</td>
+          <td>Seoul, South Korea</td>
+        </tr>
+        <tr>
+          <td>DENMARK OPEN</td>
+          <td>October</td>
+          <td>15-20</td>
+          <td>BWF Tour 750</td>
+          <td>Odense, Denmark</td>
+        </tr>
+        <tr>
+          <td>FRENCH OPEN</td>
+          <td>October</td>
+          <td>22-27</td>
+          <td>BWF Tour 750</td>
+          <td>Paris, France</td>
+        </tr>
+        <tr>
+          <td>FUZHOU CHINA OPEN</td>
+          <td>November</td>
+          <td>05-10</td>
+          <td>BWF Tour 750</td>
+          <td>Fuzhou, China</td>
+        </tr>
+        <tr>
+          <td>HONG KONG OPEN</td>
+          <td>November</td>
+          <td>12-17</td>
+          <td>BWF Tour 500</td>
+          <td>Hong Kong</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</br>
+
+{% endblock %}
